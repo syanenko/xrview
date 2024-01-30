@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Load object from ZBrush, selection test</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="timestamp">
+		<link type="text/css" rel="stylesheet" href="zvr.css">
+	</head>
+
+	<body>
+		<div class="info">Z-VR</div>
+    <div id="name">Model_01</div>
+    <input type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5" onclick="alert('Turn on camera !')" />
+
+    <!-- Upload
+    <form action="/put_model.js">
+      <label for="file_model" class="button" style="bottom: 100px">Model</label>
+      <input id="file_model" style="visibility:hidden;" type="file" onchange="this.form.submit();">
+    </form>
+    <div id="model" class = "fname" style="bottom: 100px">model_01.obj</div>
+
+    <form action="/put_tex.js">
+      <label for="file_tex" class="button" style="bottom: 60px">Texture</label>
+      <input id="file_tex" style="visibility:hidden;" type="file" onchange="this.form.submit();">
+    </form>
+    <div id="model" class = "fname" style="bottom: 60px">texture_01.png</div>
+
+    <form action="/put_norm.js">
+      <label for="file_norm" class="button" style="bottom: 20px">Normals</label>
+      <input id="file_norm" style="visibility:hidden;" type="file" onchange="this.form.submit();">
+    </form>
+    <div id="model" class = "fname" style="bottom: 20px">normals_01.png</div>
+    -->
+
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./three/three.module.js",
+					"three/addons/": "./three/jsm/"
+				}
+			}
+		</script>
+
+		<script type="module" src="zvr.js">
+		</script>
+	</body>
+</html>

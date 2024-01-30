@@ -1,0 +1,157 @@
+html, body {
+	margin: 0;
+	background-image: linear-gradient(rgb(0, 0, 0), rgb(88, 88, 88));
+  height: 100%;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+	background-color: #000;
+	color: #fff;
+  font-family: Monospace;
+	font-size: 13px;
+	line-height: 24px;
+	overscroll-behavior: none;
+}
+
+a {
+	color: #ff0;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+.info {
+	position: absolute;
+	width: 100%;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: left;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+  font-size: 180%;
+  color: #ff9127;
+	z-index: 1; /* TODO Solve this in HTML */
+}
+
+#flat_image {
+  min-height : 100%;
+  min-width : 100%;
+  max-height : 100%;
+  max-width : 100%;
+  z-index: 100;
+}
+
+
+#vr_button_container {
+	position: relative;
+	text-align: center;
+  z-index: 1;
+}
+
+a, button, input, select {
+	pointer-events: auto;
+}
+
+@media all and ( max-width: 640px ) {
+	.lil-gui.root { 
+		right: auto;
+		top: auto;
+		max-height: 50%;
+		max-width: 80%;
+		bottom: 0;
+		left: 0;
+	}
+}
+
+#overlay {
+	position: absolute;
+	font-size: 16px;
+	z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: rgba(0,0,0,0.7);
+}
+
+	#overlay button {
+		background: transparent;
+		border: 0;
+		border: 1px solid rgb(255, 255, 255);
+		border-radius: 4px;
+		color: #ffffff;
+		padding: 12px 18px;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+
+#notSupported {
+	width: 50%;
+	margin: auto;
+	background-color: #f00;
+	margin-top: 20px;
+	padding: 10px;
+}
+
+.button {
+  cursor: pointer;
+  text-transform: uppercase;
+  text-align: center;
+  text-transform: unset !important;
+  color: #000000;
+  position: absolute;
+  background-color: #ff9127;
+  font-size: 130%;
+  border-width: 4px;
+  padding: 4px;
+  margin: 5px;
+  left: 12px;
+  width: 80px;
+  border-radius: 4px;
+}
+
+.fname {
+  position: absolute;
+  left: 110px;
+  color:rgba(20, 20, 20, 1);
+  margin: 10px;
+  font-size: 140%;
+}
+
+#name {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  color:rgb(255, 255, 255);
+  margin: 10px;
+  font-size: 140%;
+  opacity: 0.5;
+}
+
+form {
+    display: inline;
+}
+
+.lil-gui {
+	--background-color:rgba(44, 44, 44, 0.6);
+	--title-background-color:rgba(44, 44, 44, 0.6);
+  --widget-color: rgba(75, 75, 75, 0.7);
+  --number-color: #ff9127;
+  --title-text-color: #ff9127;
+  --text-color: rgb(190, 190, 190);
+	--name-width: 25%;
+  --widget-height: 24px;
+	--font-size: 17px;
+  --input-font-size: 16px;
+  --font-family: Monospace;
+	z-index: 2 !important; /* TODO Solve this in HTML */
+}
