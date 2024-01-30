@@ -92,8 +92,37 @@ function init() {
   light.position.set( 0, 0, 0 );
   scene.add( light );
 
-  // Textures
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio( window.devicePixelRatio );
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  
+  // XR
+  renderer.xr.enabled = true;
+  renderer.xr.setReferenceSpaceType( 'local' );
+  renderer.xr.setFramebufferScaleFactor( 4.0 );
+  container.appendChild( renderer.domElement );
+
+  // Loader
   textureLoader = new THREE.TextureLoader();
+  loadModel();
+
+  initControls();
+  initGUI();  
+  initController();
+
+  /* Stats 
+  stats = new Stats();
+  container.appendChild( stats.dom );
+  */
+
+  document.body.appendChild( VRButton.createButton( renderer ) );
+}
+
+// Load model
+function loadModel()
+{
+  // Textures
   const diffuseMap = textureLoader.load( 'data/models/sea_star/see_star.bmp' );
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
 
@@ -114,7 +143,6 @@ function init() {
   } );
   material.side = THREE.DoubleSide;
 
-  // Load model
 /*
   loader = new OBJLoader();
   loader.load( 'data/models/sea_star/see_star.obj', function ( object ) {
@@ -124,37 +152,29 @@ function init() {
     scene.add( model );
   } );
 */
+
   // DEBUG: Test model
   const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 64, 1);
   const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
   model = new THREE.Mesh(geometry, mat);
   model.translateZ(-0.4);
   scene.add(model);
-
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setPixelRatio( window.devicePixelRatio );
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  
-  // XR
-  renderer.xr.enabled = true;
-  renderer.xr.setReferenceSpaceType( 'local' );
-  renderer.xr.setFramebufferScaleFactor( 4.0 );
-  container.appendChild( renderer.domElement );
-
-  // Orbit controls 
-  initControls();
-
-  initGUI();  
-
-  initController();
-
-  /* Stats 
-  stats = new Stats();
-  container.appendChild( stats.dom );
-  */
-  document.body.appendChild( VRButton.createButton( renderer ) );
 }
 
+// Init orbit controlls
+function initControls()
+{
+  // Controls
+  controls = new OrbitControls( camera, renderer.domElement );
+  // DEBUG !
+  // controls.target.set( 0, 0, -6 );
+  // Target test
+  controls.target.set( params.x, params.y, params.z );
+
+  controls.update();
+  controls.enablePan = true;
+  controls.enableDamping = true;
+}
 
 // Init GUI
 function initGUI()
@@ -190,27 +210,11 @@ function initGUI()
   gui_mesh.visible = false;
 }
 
-
-// Init controller
-function initControls()
-{
-  // Controls
-  controls = new OrbitControls( camera, renderer.domElement );
-  // DEBUG !
-  // controls.target.set( 0, 0, -6 );
-  // Target test
-  controls.target.set( params.x, params.y, params.z );
-
-  controls.update();
-  controls.enablePan = true;
-  controls.enableDamping = true;
-}
-
 // Init controller
 function initController()
 {
   controller = renderer.xr.getController( 0 );
-  
+
   // Grip 
   const controllerModelFactory = new XRControllerModelFactory();
   const controllerGrip1 = renderer.xr.getControllerGrip( 0 );
