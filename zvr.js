@@ -13,11 +13,6 @@ import Stats from 'three/addons/libs/stats.module.js';
 // TODO: Change to local: 'https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
 
-const intersected = [];
-const tempMatrix = new THREE.Matrix4();
-const windowHalfX = window.innerWidth / 2;
-const windowHalfY = window.innerHeight / 2;
-
 let container, stats, loader;
 let camera, scene, renderer;
 let textureLoader;
@@ -46,10 +41,21 @@ const params = {
   anx: false,
   any: false,
   anz: false,
-  switch_anx: function() {params.anx = !params.anx; param_changed = true;},
-  switch_any: function() {params.any = !params.any; param_changed = true;},
-  switch_anz: function() {params.anz = !params.anz; param_changed = true;},
-  an_speed: 0.007
+  switch_anx: function() {params.anx = !params.anx;
+                          let color = params.anx ? "#00ff00" : "#ff9127";
+                          gui.controllers[10].$name.style.color = color;
+                          param_changed = true;},
+
+  switch_any: function() {params.any = !params.any;
+                          let color = params.any ? "#00ff00" : "#ff9127";
+                          gui.controllers[11].$name.style.color = color;
+                          param_changed = true;},
+
+  switch_anz: function() {params.anz = !params.anz;
+                          let color = params.anz ? "#00ff00" : "#ff9127";
+                          gui.controllers[12].$name.style.color = color;
+                          param_changed = true;},
+  speed: 0.007
 };
 
 init();
@@ -108,7 +114,8 @@ function init() {
   } );
   material.side = THREE.DoubleSide;
 
-  // Object
+  // Load model
+/*
   loader = new OBJLoader();
   loader.load( 'data/models/sea_star/see_star.obj', function ( object ) {
     const geometry = object.children[0].geometry;
@@ -116,15 +123,13 @@ function init() {
     model.translateZ(-6);
     scene.add( model );
   } );
-
-  // DEBUG: Test object
-  /*
-  const geometry = new THREE.CylinderGeometry( 0.05, 0.05, 0.1, 64, 1);
+*/
+  // DEBUG: Test model
+  const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 64, 1);
   const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
   model = new THREE.Mesh(geometry, mat);
   model.translateZ(-0.4);
   scene.add(model);
- */
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -139,6 +144,21 @@ function init() {
   // Orbit controls 
   initControls();
 
+  initGUI();  
+
+  initController();
+
+  /* Stats 
+  stats = new Stats();
+  container.appendChild( stats.dom );
+  */
+  document.body.appendChild( VRButton.createButton( renderer ) );
+}
+
+
+// Init GUI
+function initGUI()
+{
   // GUI
   gui = new GUI( {width: 350, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
@@ -154,9 +174,10 @@ function init() {
   gui.add( params, 'switch_anx').name( 'Animate X' );
   gui.add( params, 'switch_any').name( 'Animate Y' );
   gui.add( params, 'switch_anz').name( 'Animate Z' );
-  gui.add( params, 'an_speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
-  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ controls.reset(); });
- 
+  gui.add( params, 'speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
+  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset);
+  onReset();
+
   const group = new InteractiveGroup( renderer, camera );
   scene.add( group );
 
@@ -167,15 +188,8 @@ function init() {
   gui_mesh.position.z = -0.6;
   group.add( gui_mesh );
   gui_mesh.visible = false;
-
-  initController();
-
-  /* Stats 
-  stats = new Stats();
-  container.appendChild( stats.dom );
-  */
-  document.body.appendChild( VRButton.createButton( renderer ) );
 }
+
 
 // Init controller
 function initControls()
@@ -296,6 +310,16 @@ function onRotation()
   param_changed = true;
 }
 
+function onReset()
+{
+  gui.controllers[10].$name.style.color = "#ff9127";
+  gui.controllers[11].$name.style.color = "#ff9127";
+  gui.controllers[12].$name.style.color = "#ff9127";
+  gui.controllers[14].$name.style.color = "#ff9127";
+
+  controls.reset();
+}
+
 // XR start 
 renderer.xr.addEventListener( 'sessionstart', function ( event ) {
   renderer.setClearColor(new THREE.Color(0x000), 1);
@@ -326,15 +350,15 @@ function render() {
   controls.update();
 
   if (params.anx) {
-    model.rotateX(params.an_speed);
+    model.rotateX(params.speed);
   }
 
   if (params.any) {
-    model.rotateY(params.an_speed);
+    model.rotateY(params.speed);
   }
 
   if (params.anz) {
-    model.rotateZ(params.an_speed);
+    model.rotateZ(params.speed);
   }
 
   renderer.render( scene, camera );
