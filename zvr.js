@@ -323,6 +323,7 @@ function onReset()
   gui.controllers[14].$name.style.color = "#ff9127";
 
   controls.reset();
+  controls.target.set( params.x, params.y, params.z );
 
   if (typeof model !== "undefined") {
     model.position.fromArray(modelPosition);
