@@ -6,12 +6,9 @@ import { VRButton } from 'three/addons/webxr/VRButton.js';
 import { InteractiveGroup } from 'three/addons/interactive/InteractiveGroup.js';
 import { HTMLMesh } from 'three/addons/interactive/HTMLMesh.js';
 import { GUI } from 'three/addons/libs/lil-gui.esm.min.js';
-
-import { MathUtils } from 'three';
-import Stats from 'three/addons/libs/stats.module.js';
-
-// TODO: Change to local: 'https://cdn.jsdelivr.net/npm/@webxr-input-profiles/assets@1.0/dist/profiles';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
+
+import Stats from 'three/addons/libs/stats.module.js';
 
 let container, stats, loader;
 let camera, scene, renderer;
@@ -28,13 +25,14 @@ let controller;
 let directionalLight, pointLight, ambientLight;
 
 let model;
+let modelPosition = [0,0,-6];
 
 // GUI
 const params = {
   scale: 1.0,
-  x:     0.0,
-  y:     0.0,
-  z:    -2.0,
+  x:     modelPosition[0],
+  y:     modelPosition[1],
+  z:     modelPosition[2],
   rx:    0.0,
   ry:    0.0,
   rz:    0.0,
@@ -61,6 +59,7 @@ const params = {
 init();
 animate();
 
+// Init
 function init() {
 
   container = document.createElement( 'div' );
@@ -75,22 +74,7 @@ function init() {
   scene.add( camera );
 
   // Lights
-  ambientLight = new THREE.AmbientLight( 0xffffff );
-  scene.add( ambientLight );
-
-  pointLight = new THREE.PointLight( 0xffffff, 30 );
-  pointLight.position.set( 0, 0, 6 );
-
-  scene.add( pointLight );
-
-  directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
-  directionalLight.position.set( 1, - 0.5, - 1 );
-  scene.add( directionalLight );
-
-  // Controller lighting
-  const light = new THREE.PointLight( 0xffffff, 2, 1, 0);
-  light.position.set( 0, 0, 0 );
-  scene.add( light );
+  initLights();
 
   // Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -105,23 +89,33 @@ function init() {
 
   // Loader
   textureLoader = new THREE.TextureLoader();
-  loadModel();
-
   initControls();
   initGUI();  
   initController();
+
+  loadModel({test:false});
 
   /* Stats 
   stats = new Stats();
   container.appendChild( stats.dom );
   */
-
   document.body.appendChild( VRButton.createButton( renderer ) );
 }
 
 // Load model
-function loadModel()
+function loadModel(args)
 {
+  if(args.test)
+  {
+    const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 64, 1);
+    const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
+    model = new THREE.Mesh(geometry, mat);
+    model.translateZ(-0.4);
+    controls.target.set(0, 0, -0.4);
+    scene.add(model);
+    return;
+  }
+  
   // Textures
   const diffuseMap = textureLoader.load( 'data/models/sea_star/see_star.bmp' );
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
@@ -143,51 +137,58 @@ function loadModel()
   } );
   material.side = THREE.DoubleSide;
 
-/*
   loader = new OBJLoader();
   loader.load( 'data/models/sea_star/see_star.obj', function ( object ) {
     const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
-    model.translateZ(-6);
+    model.position.fromArray(modelPosition);
+    controls.target.fromArray(modelPosition);
     scene.add( model );
   } );
-*/
-
-  // DEBUG: Test model
-  const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 64, 1);
-  const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
-  model = new THREE.Mesh(geometry, mat);
-  model.translateZ(-0.4);
-  scene.add(model);
 }
 
 // Init orbit controlls
 function initControls()
 {
-  // Controls
   controls = new OrbitControls( camera, renderer.domElement );
-  // DEBUG !
-  // controls.target.set( 0, 0, -6 );
-  // Target test
   controls.target.set( params.x, params.y, params.z );
-
   controls.update();
   controls.enablePan = true;
   controls.enableDamping = true;
+}
+
+// Init lights
+function initLights()
+{
+  ambientLight = new THREE.AmbientLight( 0xffffff );
+  scene.add( ambientLight );
+
+  pointLight = new THREE.PointLight( 0xffffff, 30 );
+  pointLight.position.set( 0, 0, 6 );
+  scene.add( pointLight );
+
+  directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
+  directionalLight.position.set( 1, - 0.5, - 1 );
+  scene.add( directionalLight );
+
+  // Hilight controller
+  const light = new THREE.PointLight( 0xffffff, 2, 1, 0);
+  light.position.set( 0, 0, 0 );
+  scene.add( light );
 }
 
 // Init GUI
 function initGUI()
 {
   // GUI
-  gui = new GUI( {width: 350, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
+  gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
   gui.add( params, 'x', -5.0, 5.0, 0.01 ).name( 'X' ).onChange(onX);
   gui.add( params, 'y', -5.0, 5.0, 0.01 ).name( 'Y' ).onChange(onY);
   gui.add( params, 'z', -10, -0.3, 0.01 ).name( 'Z' ).onChange(onZ);
-  gui.add( params, 'rx', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate X' ).onChange( onRotation );
-  gui.add( params, 'ry', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate Y' ).onChange( onRotation );
-  gui.add( params, 'rz', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate Z' ).onChange( onRotation );
+  gui.add( params, 'rx', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot X' ).onChange( onRotation );
+  gui.add( params, 'ry', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
+  gui.add( params, 'rz', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
   gui.add( params, 'anx').hide();
   gui.add( params, 'any').hide();
   gui.add( params, 'anz').hide();
@@ -322,6 +323,10 @@ function onReset()
   gui.controllers[14].$name.style.color = "#ff9127";
 
   controls.reset();
+
+  if (typeof model !== "undefined") {
+    model.position.fromArray(modelPosition);
+  }
 }
 
 // XR start 

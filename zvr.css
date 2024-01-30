@@ -148,9 +148,12 @@ form {
   --number-color: #ff9127;
   --title-text-color: #ff9127;
   --text-color: rgb(190, 190, 190);
-	--name-width: 25%;
+	--name-width: 20%;
   --widget-height: 24px;
-	--font-size: 17px;
+  --slider-knob-width: 5px;
+  --slider-input-width: 60px;
+  --slider-input-min-width: 60x;
+	--font-size: 16px;
   --input-font-size: 16px;
   --font-family: Monospace;
 	z-index: 2 !important; /* TODO Solve this in HTML */
