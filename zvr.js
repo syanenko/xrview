@@ -21,8 +21,8 @@ const windowHalfY = window.innerHeight / 2;
 let container, stats, loader;
 let camera, scene, renderer;
 let textureLoader;
-var gui, gui_mesh;
-var param_changed = false;
+let gui, gui_mesh;
+let param_changed = false;
 
 let beam;
 const beam_color = 0xffffff;
@@ -36,12 +36,21 @@ let model;
 
 // GUI
 const params = {
-  scale:   1.0,
-  x: 0.0,
-  y: 0.0,
-  z: 0.0
+  scale: 1.0,
+  x:     0.0,
+  y:     0.0,
+  z:    -2.0,
+  rx:    0.0,
+  ry:    0.0,
+  rz:    0.0,
+  anx: false,
+  any: false,
+  anz: false,
+  switch_anx: function() {params.anx = !params.anx; param_changed = true;},
+  switch_any: function() {params.any = !params.any; param_changed = true;},
+  switch_anz: function() {params.anz = !params.anz; param_changed = true;},
+  an_speed: 0.007
 };
-
 
 init();
 animate();
@@ -100,21 +109,22 @@ function init() {
   material.side = THREE.DoubleSide;
 
   // Object
-/*
   loader = new OBJLoader();
   loader.load( 'data/models/sea_star/see_star.obj', function ( object ) {
-    const geometry = object.children[ 0 ].geometry;
+    const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
     model.translateZ(-6);
     scene.add( model );
   } );
-*/
+
   // DEBUG: Test object
+  /*
   const geometry = new THREE.CylinderGeometry( 0.05, 0.05, 0.1, 64, 1);
   const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
   model = new THREE.Mesh(geometry, mat);
   model.translateZ(-0.4);
   scene.add(model);
+ */
 
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio( window.devicePixelRatio );
@@ -131,12 +141,22 @@ function init() {
 
   // GUI
   gui = new GUI( {width: 350, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
-  gui.add( params, 'scale', 0.5, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
-  gui.add( params, 'x', -0.7, 0.7, 0.01 ).name( 'X' ).onChange(onX);
-  gui.add( params, 'y', -0.7, 0.7, 0.01 ).name( 'Y' ).onChange(onY);
-  gui.add( params, 'z', -0.7, 0.7, 0.01 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
+  gui.add( params, 'x', -5.0, 5.0, 0.01 ).name( 'X' ).onChange(onX);
+  gui.add( params, 'y', -5.0, 5.0, 0.01 ).name( 'Y' ).onChange(onY);
+  gui.add( params, 'z', -10, -0.3, 0.01 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'rx', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate X' ).onChange( onRotation );
+  gui.add( params, 'ry', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate Y' ).onChange( onRotation );
+  gui.add( params, 'rz', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rotate Z' ).onChange( onRotation );
+  gui.add( params, 'anx').hide();
+  gui.add( params, 'any').hide();
+  gui.add( params, 'anz').hide();
+  gui.add( params, 'switch_anx').name( 'Animate X' );
+  gui.add( params, 'switch_any').name( 'Animate Y' );
+  gui.add( params, 'switch_anz').name( 'Animate Z' );
+  gui.add( params, 'an_speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ controls.reset(); });
-  
+ 
   const group = new InteractiveGroup( renderer, camera );
   scene.add( group );
 
@@ -245,22 +265,34 @@ function onSelectEnd( event )
 // GUI changes
 //
 function onScale() {
+  if (typeof model == "undefined") { return; }
   model.scale.setScalar( params.scale );
   param_changed = true;
 }
 
 function onX() {
+  if (typeof model == "undefined") { return; }
   model.position.setX( params.x );
   param_changed = true;
 }
 
 function onY() {
+  if (typeof model == "undefined") { return; }
   model.position.setY( params.y );
   param_changed = true;
 }
 
 function onZ() {
+  if (typeof model == "undefined") { return; }
   model.position.setZ( params.z );
+  param_changed = true;
+}
+
+function onRotation()
+{
+  if (typeof model == "undefined") { return; }
+  const euler = new THREE.Euler( params.rx, params.ry, params.rz, 'XYZ' );
+  model.setRotationFromEuler(euler);
   param_changed = true;
 }
 
@@ -275,7 +307,7 @@ renderer.xr.addEventListener( 'sessionend', function ( event ) {
   gui_mesh.visible = false;
 });
 
-// Resizw
+// Resize
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
@@ -289,7 +321,21 @@ function animate() {
 
 // Render
 function render() {
+  if (typeof model == "undefined") { return; }
   // stats.update();
   controls.update();
+
+  if (params.anx) {
+    model.rotateX(params.an_speed);
+  }
+
+  if (params.any) {
+    model.rotateY(params.an_speed);
+  }
+
+  if (params.anz) {
+    model.rotateZ(params.an_speed);
+  }
+
   renderer.render( scene, camera );
 }
