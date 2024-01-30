@@ -332,6 +332,7 @@ function onReset()
 // XR start 
 renderer.xr.addEventListener( 'sessionstart', function ( event ) {
   renderer.setClearColor(new THREE.Color(0x000), 1);
+  gui_mesh.visible = true;
 } );
 
 // XR end
