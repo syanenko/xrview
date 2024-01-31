@@ -130,7 +130,6 @@ function controlVideo()
     controls.enabled = false;
   } else {
     video_mesh.visible = false;
-    video.pause();
     video.srcObject.getTracks()[0].stop();
     video.srcObject = null;
 
@@ -150,8 +149,9 @@ function initVideo()
   video_mesh = new THREE.Mesh( geometry, material );
   video_mesh.lookAt( camera.position );
   video_mesh.position.set(0,0,-60);
-  scene.add( video_mesh );
+  video_mesh.scale.x = -1; // Mirror
   video_mesh.visible = false;
+  scene.add( video_mesh );
 }
 
 // Load model
