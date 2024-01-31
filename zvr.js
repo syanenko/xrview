@@ -27,6 +27,8 @@ let directionalLight, pointLight, ambientLight;
 let model;
 let modelPosition = [0,0,-6];
 
+let video, video_mesh;
+
 // GUI
 const params = {
   scale: 1.0,
@@ -70,10 +72,10 @@ function init() {
 
   // Camera
   camera = new THREE.PerspectiveCamera( 85, window.innerWidth / window.innerHeight, 0.01, 10000 );
-  camera.position.z = 1; 
+  camera.position.z = 1;
   scene.add( camera );
 
-  // Lights
+  initVideo();
   initLights();
 
   // Renderer
@@ -89,17 +91,67 @@ function init() {
 
   // Loader
   textureLoader = new THREE.TextureLoader();
+
   initControls();
   initGUI();  
   initController();
-
   loadModel({test:false});
 
-  /* Stats 
-  stats = new Stats();
-  container.appendChild( stats.dom );
-  */
+  // Stats 
+  // stats = new Stats();
+  // container.appendChild( stats.dom );
+
+  document.getElementById("video_button").onclick = controlVideo;
   document.body.appendChild( VRButton.createButton( renderer ) );
+}
+
+// Video
+function controlVideo()
+{
+  if (video.paused)
+  {
+    if ( navigator.mediaDevices && navigator.mediaDevices.getUserMedia ) {
+      const constraints = { video: { width: 1280, height: 720, facingMode: 'user' } };
+
+      navigator.mediaDevices.getUserMedia( constraints ).then( function ( stream ) {
+        video.srcObject = stream;
+      } ).catch( function ( error ) {
+        console.error( 'Unable to access the camera/webcam.', error );
+      } );
+    } else {
+      console.error( 'MediaDevices interface not available.' );
+    }
+
+    video.play();
+    video_mesh.visible = true;
+
+    controls.reset();
+    controls.target.fromArray( modelPosition );
+    controls.enabled = false;
+  } else {
+    video_mesh.visible = false;
+    video.pause();
+    video.srcObject.getTracks()[0].stop();
+    video.srcObject = null;
+
+    controls.enabled = true;
+  }
+}
+
+// Video stream
+function initVideo()
+{
+  // TODO: Fit to window
+  video = document.getElementById( 'video' );
+  const texture = new THREE.VideoTexture( video );
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const geometry = new THREE.PlaneGeometry(160, 90);
+  const material = new THREE.MeshBasicMaterial( { map: texture } );
+  video_mesh = new THREE.Mesh( geometry, material );
+  video_mesh.lookAt( camera.position );
+  video_mesh.position.set(0,0,-60);
+  scene.add( video_mesh );
+  video_mesh.visible = false;
 }
 
 // Load model

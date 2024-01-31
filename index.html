@@ -12,7 +12,10 @@
 	<body>
 		<div class="info">Z-VR</div>
     <div id="name">Model_01</div>
-    <input type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5" onclick="alert('Turn on camera !')" />
+
+    <!-- Video -->
+    <video id="video" style="display:none" playsinline></video>
+    <input id="video_button"  type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5"/>
 
     <!-- Upload
     <form action="/put_model.js">
