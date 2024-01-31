@@ -101,12 +101,12 @@ function init() {
   // stats = new Stats();
   // container.appendChild( stats.dom );
 
-  document.getElementById("video_button").onclick = controlVideo;
+  document.getElementById("video_button").onclick = switchVideo;
   document.body.appendChild( VRButton.createButton( renderer ) );
 }
 
 // Video
-function controlVideo()
+function switchVideo()
 {
   if (video.paused)
   {
@@ -386,7 +386,11 @@ function onReset()
 renderer.xr.addEventListener( 'sessionstart', function ( event ) {
   renderer.setClearColor(new THREE.Color(0x000), 1);
   gui_mesh.visible = true;
-} );
+  
+  if(!video.paused) {
+    switchVideo();
+  }
+});
 
 // XR end
 renderer.xr.addEventListener( 'sessionend', function ( event ) {
