@@ -31,6 +31,8 @@ let video, video_mesh;
 
 // GUI
 const params = {
+  upload: function() { let form = document.getElementById("form_upload");
+                       form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible"; },
   scale: 1.0,
   x:     modelPosition[0],
   y:     modelPosition[1],
@@ -43,21 +45,20 @@ const params = {
   anz: false,
   switch_anx: function() {params.anx = !params.anx;
                           let color = params.anx ? "#00ff00" : "#ff9127";
-                          gui.controllers[10].$name.style.color = color;
+                          gui.controllers[11].$name.style.color = color;
                           param_changed = true;},
 
   switch_any: function() {params.any = !params.any;
                           let color = params.any ? "#00ff00" : "#ff9127";
-                          gui.controllers[11].$name.style.color = color;
+                          gui.controllers[12].$name.style.color = color;
                           param_changed = true;},
 
   switch_anz: function() {params.anz = !params.anz;
                           let color = params.anz ? "#00ff00" : "#ff9127";
-                          gui.controllers[12].$name.style.color = color;
+                          gui.controllers[13].$name.style.color = color;
                           param_changed = true;},
-  speed: 0.007
-};
-
+  speed: 0.007 }
+  
 init();
 animate();
 
@@ -95,7 +96,9 @@ function init() {
   initControls();
   initGUI();  
   initController();
-  loadModel({test:false});
+
+  // DEBUG ! 
+  // loadModel({test:false});
 
   // Stats 
   // stats = new Stats();
@@ -234,6 +237,7 @@ function initGUI()
 {
   // GUI
   gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
+  gui.add( params, 'upload').name( 'Upload model' ).$name.style.color = "#ff9127";
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
   gui.add( params, 'x', -5.0, 5.0, 0.01 ).name( 'X' ).onChange(onX);
   gui.add( params, 'y', -5.0, 5.0, 0.01 ).name( 'Y' ).onChange(onY);
@@ -248,8 +252,7 @@ function initGUI()
   gui.add( params, 'switch_any').name( 'Animate Y' );
   gui.add( params, 'switch_anz').name( 'Animate Z' );
   gui.add( params, 'speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
-  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset);
-  onReset();
+  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset); onReset();
 
   const group = new InteractiveGroup( renderer, camera );
   scene.add( group );
@@ -369,10 +372,10 @@ function onRotation()
 
 function onReset()
 {
-  gui.controllers[10].$name.style.color = "#ff9127";
   gui.controllers[11].$name.style.color = "#ff9127";
   gui.controllers[12].$name.style.color = "#ff9127";
-  gui.controllers[14].$name.style.color = "#ff9127";
+  gui.controllers[13].$name.style.color = "#ff9127";
+  gui.controllers[15].$name.style.color = "#ff9127";
 
   controls.reset();
   controls.target.set( params.x, params.y, params.z );

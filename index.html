@@ -17,26 +17,64 @@
     <video id="video" style="display:none" playsinline></video>
     <input id="video_button"  type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5"/>
 
-    <!-- Upload
-    <form action="/put_model.js">
-      <label for="file_model" class="button" style="bottom: 100px">Model</label>
-      <input id="file_model" style="visibility:hidden;" type="file" onchange="this.form.submit();">
-    </form>
-    <div id="model" class = "fname" style="bottom: 100px">model_01.obj</div>
+    <!-- Upload model -->
+    <div id="form_upload">
+      <form encType="multipart/form-data">
+          Upload model<br/><br/>
+        <input name="model"   type="file" /><br/>
+        <input name="texture" type="file" /><br/>
+        <input name="normals" type="file" /><br/><br/>
+        <input type="submit"  value="Upload"/>
+      </form>
+    </duv>
 
-    <form action="/put_tex.js">
-      <label for="file_tex" class="button" style="bottom: 60px">Texture</label>
-      <input id="file_tex" style="visibility:hidden;" type="file" onchange="this.form.submit();">
-    </form>
-    <div id="model" class = "fname" style="bottom: 60px">texture_01.png</div>
+    <script>
+      var form = document.getElementById('form_upload');
 
-    <form action="/put_norm.js">
-      <label for="file_norm" class="button" style="bottom: 20px">Normals</label>
-      <input id="file_norm" style="visibility:hidden;" type="file" onchange="this.form.submit();">
-    </form>
-    <div id="model" class = "fname" style="bottom: 20px">normals_01.png</div>
-    -->
+      // Add a submit event listener to the form
+      form.addEventListener('submit', function(e) {
+        // Prevent the default form submission behavior
+        e.preventDefault();
 
+        // Create a new FormData object
+        var formData = new FormData();
+
+        // Get the selected file
+        var model   = form.querySelector('[name="model"]'  ).files[0];
+        var texture = form.querySelector('[name="texture"]').files[0];
+        var normals = form.querySelector('[name="normals"]').files[0];
+
+        // Add the file to the FormData object
+        formData.append('model',   model);
+        formData.append('texture', texture);
+        formData.append('normals', normals);
+
+        // Create an XMLHttpRequest object
+        var xhr = new XMLHttpRequest();
+
+        // Set the request URL
+        xhr.open('POST', 'http://localhost:8081/upload.php');
+
+        // Set the request as asynchronous
+        // xhr.responseType = 'json';
+        
+        // Set the request onload event listener
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            // The image was successfully uploaded
+            console.log(xhr.response);
+          } else {
+            // There was an error uploading the image
+            console.error(xhr.response);
+          }
+        }
+        // Send the request
+        xhr.send(formData);
+        form.style.visibility = 'hidden';
+      });
+    </script>
+
+    <!-- Imports -->
 		<script type="importmap">
 			{
 				"imports": {
