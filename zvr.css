@@ -161,6 +161,7 @@ a, button, input, select {
   position: absolute;
   top: calc(50vh - 200px);
   left: calc(50vw - 100px); 
+  border-radius: 4px;
   color: #ff9127;
   background-color:rgba(75, 75, 75, 0.7);
   font-size: 16px;

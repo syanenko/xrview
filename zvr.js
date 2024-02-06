@@ -98,7 +98,7 @@ function init() {
   initController();
 
   // DEBUG ! 
-  // loadModel({test:false});
+  loadModel({test:false});
 
   // Stats 
   // stats = new Stats();
