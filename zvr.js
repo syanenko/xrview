@@ -158,8 +158,18 @@ function initVideo()
 }
 
 // Load model
-function loadModel(args)
+export function loadModel(args)
 {
+  // Cleanup scene
+  const curModel = scene.getObjectByName('model');
+  if (typeof curModel !== "undefined") {
+    curModel.geometry.dispose();
+    curModel.material.dispose();
+    scene.remove( curModel );
+    renderer.renderLists.dispose();
+  }
+
+  // Test object
   if(args.test)
   {
     const geometry = new THREE.CylinderGeometry( 0.5, 0.5, 1.5, 64, 1);
@@ -167,16 +177,31 @@ function loadModel(args)
     model = new THREE.Mesh(geometry, mat);
     model.translateZ(-0.4);
     controls.target.set(0, 0, -0.4);
+    model.name='model';
     scene.add(model);
     return;
   }
-  
-  // Textures
-  const diffuseMap = textureLoader.load( 'data/models/sea_star/see_star.bmp' );
-  diffuseMap.colorSpace = THREE.SRGBColorSpace;
 
-  // const specularMap = textureLoader.load( 'data/models/sea_star/sea_star_spec.jpg' );
-  const normalMap = textureLoader.load( 'data/models/sea_star/sea_star_nm.bmp' );
+  // Default model - TODO: find better
+  let obj_path = 'data/models/sea_star/see_star.obj';
+  let tex_path = 'data/models/sea_star/see_star.bmp';
+  let nor_path = 'data/models/sea_star/sea_star_nm.bmp';
+
+  if(args.model)
+  {
+    model = JSON.parse(args.model);
+    console.log(model['model']);
+    console.log(model['texture']);
+    console.log(model['normals']);
+
+    obj_path  = model['model'];
+    tex_path  = model['texture'];
+    nor_path =  model['normals']
+  }
+   
+  const diffuseMap = textureLoader.load( tex_path );
+  diffuseMap.colorSpace = THREE.SRGBColorSpace;
+  const normalMap = textureLoader.load( nor_path );
 
   // Material
   const material = new THREE.MeshPhongMaterial( {
@@ -188,19 +213,21 @@ function loadModel(args)
     normalMap: normalMap,
     normalMapType: THREE.TangentSpaceNormalMap,
     // normalMapType: THREE.ObjectSpaceNormalMap,
-    normalScale: new THREE.Vector2( 2.1, 2.1 )
+    normalScale: new THREE.Vector2( 2, 2 )
   } );
   material.side = THREE.DoubleSide;
 
   loader = new OBJLoader();
-  loader.load( 'data/models/sea_star/see_star.obj', function ( object ) {
+  loader.load( obj_path, function ( object ) {
     const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
     model.position.fromArray(modelPosition);
     controls.target.fromArray(modelPosition);
+    model.name='model';
     scene.add( model );
-  } );
+  });
 }
+window.loadModel = loadModel;
 
 // Init orbit controlls
 function initControls()

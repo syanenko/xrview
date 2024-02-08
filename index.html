@@ -17,6 +17,17 @@
     <video id="video" style="display:none" playsinline></video>
     <input id="video_button"  type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5"/>
 
+    <!-- Imports -->
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "./three/three.module.js",
+					"three/addons/": "./three/jsm/"
+				}
+			}
+		</script>
+		<script type="module" src="zvr.js"></script>
+
     <!-- Upload model -->
     <div id="form_upload">
       <form encType="multipart/form-data">
@@ -63,6 +74,7 @@
           if (xhr.status === 200) {
             // The image was successfully uploaded
             console.log(xhr.response);
+            window.loadModel({model:xhr.response});
           } else {
             // There was an error uploading the image
             console.error(xhr.response);
@@ -74,17 +86,5 @@
       });
     </script>
 
-    <!-- Imports -->
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "./three/three.module.js",
-					"three/addons/": "./three/jsm/"
-				}
-			}
-		</script>
-
-		<script type="module" src="zvr.js">
-		</script>
 	</body>
 </html>
