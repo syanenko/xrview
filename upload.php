@@ -1,8 +1,8 @@
 <?php
-header('Access-Control-Allow-Origin: http://localhost:3000');
+header('Access-Control-Allow-Origin: *');
 
-$UPLOADS_DIR = 'C:\\xampp\\htdocs\\test\\uploads\\' .
-               sha1_file($_FILES['model']['tmp_name']) . '\\';
+$TEMP_DIR = sha1_file($_FILES['model']['tmp_name']);
+$UPLOADS_DIR = 'uploads/' . $TEMP_DIR . '/';
 
 if(!is_dir($UPLOADS_DIR))
 {
