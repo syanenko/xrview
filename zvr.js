@@ -204,7 +204,8 @@ export function loadModel(args)
   const diffuseMap = textureLoader.load( tex_path );
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
   const normalMap = textureLoader.load( nor_path );
-
+  // DEBUG !
+  console.log("Normals: ")
   console.dir(normalMap);
 
   // Material
