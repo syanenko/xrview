@@ -30,11 +30,11 @@ let modelRotation = [0, 0, 0];
 let video, video_mesh;
 
 // Default model
-let obj_path = 'data/models/spiral/spiral.obj';
-// let tex_path = 'data/models/spiral/spiral.bmp';
-// let nor_path = 'data/models/spiral/spiral_nm.bmp';
-let tex_path = ''; // Without texture and normals now
-let nor_path = '';
+const OBJ_PATH = 'data/models/spiral/spiral.obj';
+const TEX_PATH = 'data/models/spiral/spiral.bmp';
+// const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
+// const TEX_PATH = ''; // Without texture and normals now
+const NOR_PATH = '';
 
 // GUI
 const params = {
@@ -104,10 +104,12 @@ function init() {
   initGUI();  
   initController();
 
-  // DEBUG ! 
-  loadModel({test:false});
-  params.switch_any(); // Turntable by default
-  
+  // Default model on startup
+  // loadModel({test:false});
+
+  loadModel({test:false,
+             model: {model: OBJ_PATH, texture: TEX_PATH, normals: NOR_PATH }});
+    
   document.getElementById("video_button").onclick = switchVideo;
   document.body.appendChild( VRButton.createButton( renderer ) );
 }
@@ -196,22 +198,25 @@ export function loadModel(args)
     model = args.model;
     console.dir(model); // DEBUG !
 
-    obj_path  = model['model'];
-    tex_path  = model['texture'];
-    nor_path =  model['normals']
+    var objPath = model['model'];
+    var texPath = model['texture'];
+    var norPath = model['normals']
+  } else {
+    console.log('Error: no model in function argumets');
+    return;
   }
    
   let diffuseMap = '';
   let color = 0xffd47f;
-  if (tex_path !== '') {
-    diffuseMap = textureLoader.load( tex_path );
+  if (texPath !== '') {
+    diffuseMap = textureLoader.load( texPath );
     diffuseMap.colorSpace = THREE.SRGBColorSpace;
     color = 0xffffff;
   }
 
   let normalMap = '';
-  if (nor_path !== '') {
-    normalMap = textureLoader.load( nor_path );
+  if (norPath !== '') {
+    normalMap = textureLoader.load( norPath );
   }
   
   // DEBUG !
@@ -234,7 +239,7 @@ export function loadModel(args)
   
   // Geometry
   loader = new OBJLoader();
-  loader.load( obj_path, function ( object ) {
+  loader.load( objPath, function ( object ) {
     const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
 
@@ -246,6 +251,8 @@ export function loadModel(args)
     controls.target.fromArray(modelPosition);
     model.name='model';
     scene.add( model );
+
+    params.switch_any(); // Turntable by default
   });
 }
 window.loadModel = loadModel;
