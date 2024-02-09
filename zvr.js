@@ -8,9 +8,7 @@ import { HTMLMesh } from 'three/addons/interactive/HTMLMesh.js';
 import { GUI } from 'three/addons/libs/lil-gui.esm.min.js';
 import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
 
-import Stats from 'three/addons/libs/stats.module.js';
-
-let container, stats, loader;
+let container, loader;
 let camera, scene, renderer;
 let textureLoader;
 let gui, gui_mesh;
@@ -100,10 +98,6 @@ function init() {
   // DEBUG ! 
   loadModel({test:false});
 
-  // Stats 
-  // stats = new Stats();
-  // container.appendChild( stats.dom );
-
   document.getElementById("video_button").onclick = switchVideo;
   document.body.appendChild( VRButton.createButton( renderer ) );
 }
@@ -189,7 +183,7 @@ export function loadModel(args)
 
   if(args.model)
   {
-    model = JSON.parse(args.model);
+    model = args.model;
     console.log(model['model']);
     console.log(model['texture']);
     console.log(model['normals']);
@@ -443,7 +437,6 @@ function animate() {
 // Render
 function render() {
   if (typeof model == "undefined") { return; }
-  // stats.update();
   controls.update();
 
   if (params.anx) {

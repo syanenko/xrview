@@ -64,11 +64,12 @@
         var xhr = new XMLHttpRequest();
 
         // Set the request URL
+        // TODO: Check on publishing (!)
         xhr.open('POST', 'http://localhost:8081/upload.php');
 
         // Set the request as asynchronous
-        // xhr.responseType = 'json';
-        
+        xhr.responseType = 'json';
+
         // Set the request onload event listener
         xhr.onload = function() {
           if (xhr.status === 200) {
