@@ -25,14 +25,16 @@ let directionalLight, pointLight, ambientLight;
 let model;
 // Defaults
 let modelPosition = [0, 0, -1.6];
-let modelRotation = [0.6, 0, 0];
+let modelRotation = [0, 0, 0];
 
 let video, video_mesh;
 
 // Default model
 let obj_path = 'data/models/spiral/spiral.obj';
-let tex_path = 'data/models/spiral/spiral.bmp';
-let nor_path = 'data/models/spiral/spiral_nm.bmp'; // TODO: Fix artefacts
+// let tex_path = 'data/models/spiral/spiral.bmp';
+// let nor_path = 'data/models/spiral/spiral_nm.bmp';
+let tex_path = ''; // Without texture and normals now
+let nor_path = '';
 
 // GUI
 const params = {
