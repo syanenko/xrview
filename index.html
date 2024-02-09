@@ -73,8 +73,8 @@
         // Set the request onload event listener
         xhr.onload = function() {
           if (xhr.status === 200) {
-            // The image was successfully uploaded
-            console.log(xhr.response);
+            // DEBUG ! 
+            console.dir({model:xhr.response});
             window.loadModel({model:xhr.response});
           } else {
             // There was an error uploading the image

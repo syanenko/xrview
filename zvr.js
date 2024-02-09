@@ -104,7 +104,8 @@ function init() {
 
   // DEBUG ! 
   loadModel({test:false});
-
+  params.switch_any(); // Turntable by default
+  
   document.getElementById("video_button").onclick = switchVideo;
   document.body.appendChild( VRButton.createButton( renderer ) );
 }
@@ -161,6 +162,11 @@ function initVideo()
 // Load model
 export function loadModel(args)
 {
+  // Stop animation
+  params.anx ? params.switch_anx():0;
+  params.any ? params.switch_any():0;
+  params.anz ? params.switch_anz():0;
+
   // Cleanup scene
   const curModel = scene.getObjectByName('model');
   if (typeof curModel !== "undefined") {
@@ -283,8 +289,6 @@ function initGUI()
   gui.add( params, 'switch_anz').name( 'Animate Z' );
   gui.add( params, 'speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset); onReset();
-
-  params.switch_any(); // Turntable by default
 
   const group = new InteractiveGroup( renderer, camera );
   scene.add( group );
