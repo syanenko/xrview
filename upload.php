@@ -12,11 +12,19 @@ if(!is_dir($UPLOADS_DIR))
 $model_path = $UPLOADS_DIR . $_FILES['model']['name'];
 move_uploaded_file($_FILES['model']["tmp_name"], $model_path);
 
-$texture_path = $UPLOADS_DIR . $_FILES['texture']['name'];
-move_uploaded_file($_FILES['texture']["tmp_name"], $texture_path);
+if( in_array('texture', $_FILES) ) {
+  $texture_path = $UPLOADS_DIR . $_FILES['texture']['name'];
+  move_uploaded_file($_FILES['texture']["tmp_name"], $texture_path);
+} else  {
+  $texture_path = "";
+}
 
-$normals_path = $UPLOADS_DIR . $_FILES['normals']['name'];
-move_uploaded_file($_FILES['normals']["tmp_name"], $normals_path);
+if( in_array('normals', $_FILES) ) {
+  $normals_path = $UPLOADS_DIR . $_FILES['normals']['name'];
+  move_uploaded_file($_FILES['normals']["tmp_name"], $normals_path);
+} else  {
+  $normals_path = "";
+}
 
 echo json_encode(['model' => $model_path, 'texture' => $texture_path, 'normals' => $normals_path]);
 ?>
