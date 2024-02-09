@@ -23,9 +23,16 @@ let controller;
 let directionalLight, pointLight, ambientLight;
 
 let model;
-let modelPosition = [0,0,-6];
+// Defaults
+let modelPosition = [0, 0, -1.6];
+let modelRotation = [0.6, 0, 0];
 
 let video, video_mesh;
+
+// Default model
+let obj_path = 'data/models/spiral/spiral.obj';
+let tex_path = 'data/models/spiral/spiral.bmp';
+let nor_path = 'data/models/spiral/spiral_nm.bmp'; // TODO: Fix artefacts
 
 // GUI
 const params = {
@@ -35,9 +42,9 @@ const params = {
   x:     modelPosition[0],
   y:     modelPosition[1],
   z:     modelPosition[2],
-  rx:    0.0,
-  ry:    0.0,
-  rz:    0.0,
+  rx:    modelRotation[0],
+  ry:    modelRotation[1],
+  rz:    modelRotation[2],
   anx: false,
   any: false,
   anz: false,
@@ -55,8 +62,8 @@ const params = {
                           let color = params.anz ? "#00ff00" : "#ff9127";
                           gui.controllers[13].$name.style.color = color;
                           param_changed = true;},
-  speed: 0.007 }
-  
+  speed: -0.007 }
+
 init();
 animate();
 
@@ -176,11 +183,6 @@ export function loadModel(args)
     return;
   }
 
-  // Default model - TODO: find better
-  let obj_path = 'data/models/sea_star/see_star.obj';
-  let tex_path = 'data/models/sea_star/see_star.bmp';
-  let nor_path = 'data/models/sea_star/sea_star_nm.bmp';
-
   if(args.model)
   {
     model = args.model;
@@ -196,6 +198,8 @@ export function loadModel(args)
   const diffuseMap = textureLoader.load( tex_path );
   diffuseMap.colorSpace = THREE.SRGBColorSpace;
   const normalMap = textureLoader.load( nor_path );
+
+  console.dir(normalMap);
 
   // Material
   const material = new THREE.MeshPhongMaterial( {
@@ -215,7 +219,12 @@ export function loadModel(args)
   loader.load( obj_path, function ( object ) {
     const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
+
     model.position.fromArray(modelPosition);
+    model.rotateX(modelRotation[0]);
+    model.rotateY(modelRotation[1]);
+    model.rotateZ(modelRotation[2]);
+
     controls.target.fromArray(modelPosition);
     model.name='model';
     scene.add( model );
@@ -274,6 +283,8 @@ function initGUI()
   gui.add( params, 'switch_anz').name( 'Animate Z' );
   gui.add( params, 'speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset); onReset();
+
+  params.switch_any(); // Turntable by default
 
   const group = new InteractiveGroup( renderer, camera );
   scene.add( group );
