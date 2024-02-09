@@ -192,25 +192,33 @@ export function loadModel(args)
   if(args.model)
   {
     model = args.model;
-    console.log(model['model']);
-    console.log(model['texture']);
-    console.log(model['normals']);
+    console.dir(model); // DEBUG !
 
     obj_path  = model['model'];
     tex_path  = model['texture'];
     nor_path =  model['normals']
   }
    
-  const diffuseMap = textureLoader.load( tex_path );
-  diffuseMap.colorSpace = THREE.SRGBColorSpace;
-  const normalMap = textureLoader.load( nor_path );
+  let diffuseMap = '';
+  let color = 0xffd47f;
+  if (tex_path !== '') {
+    diffuseMap = textureLoader.load( tex_path );
+    diffuseMap.colorSpace = THREE.SRGBColorSpace;
+    color = 0xffffff;
+  }
+
+  let normalMap = '';
+  if (nor_path !== '') {
+    normalMap = textureLoader.load( nor_path );
+  }
+  
   // DEBUG !
-  console.log("Normals: ")
-  console.dir(normalMap);
+  // console.log("Normals: ")
+  // console.dir(normalMap);
 
   // Material
   const material = new THREE.MeshPhongMaterial( {
-    color: 0xefefef,
+    color: color,
     specular: 0x222222,
     shininess: 35,
     map: diffuseMap,
@@ -221,7 +229,8 @@ export function loadModel(args)
     normalScale: new THREE.Vector2( 2, 2 )
   } );
   material.side = THREE.DoubleSide;
-
+  
+  // Geometry
   loader = new OBJLoader();
   loader.load( obj_path, function ( object ) {
     const geometry = object.children[0].geometry;
