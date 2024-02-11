@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-import { VRButton } from 'three/addons/webxr/VRButton.js';
+import { VRButtonIcon } from 'three/addons/webxr/VRButtonIcon.js';
 import { InteractiveGroup } from 'three/addons/interactive/InteractiveGroup.js';
 import { HTMLMesh } from 'three/addons/interactive/HTMLMesh.js';
 import { GUI } from 'three/addons/libs/lil-gui.esm.min.js';
@@ -38,8 +38,6 @@ const NOR_PATH = '';
 
 // GUI
 const params = {
-  upload: function() { let form = document.getElementById("form_upload");
-                       form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible"; },
   scale: 1.0,
   x:     modelPosition[0],
   y:     modelPosition[1],
@@ -52,17 +50,17 @@ const params = {
   anz: false,
   switch_anx: function() {params.anx = !params.anx;
                           let color = params.anx ? "#00ff00" : "#ff9127";
-                          gui.controllers[11].$name.style.color = color;
+                          gui.controllers[10].$name.style.color = color;
                           param_changed = true;},
 
   switch_any: function() {params.any = !params.any;
                           let color = params.any ? "#00ff00" : "#ff9127";
-                          gui.controllers[12].$name.style.color = color;
+                          gui.controllers[11].$name.style.color = color;
                           param_changed = true;},
 
   switch_anz: function() {params.anz = !params.anz;
                           let color = params.anz ? "#00ff00" : "#ff9127";
-                          gui.controllers[13].$name.style.color = color;
+                          gui.controllers[12].$name.style.color = color;
                           param_changed = true;},
   speed: -0.007 }
 
@@ -111,7 +109,7 @@ function init() {
              model: {model: OBJ_PATH, texture: TEX_PATH, normals: NOR_PATH }});
     
   document.getElementById("video_button").onclick = switchVideo;
-  document.body.appendChild( VRButton.createButton( renderer ) );
+  document.body.appendChild( VRButtonIcon.createButton( renderer ) );
 }
 
 // Video
@@ -292,7 +290,6 @@ function initGUI()
 {
   // GUI
   gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
-  gui.add( params, 'upload').name( 'Upload model' ).$name.style.color = "#ff9127";
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
   gui.add( params, 'x', -5.0, 5.0, 0.01 ).name( 'X' ).onChange(onX);
   gui.add( params, 'y', -5.0, 5.0, 0.01 ).name( 'Y' ).onChange(onY);
@@ -427,10 +424,10 @@ function onRotation()
 
 function onReset()
 {
+  gui.controllers[10].$name.style.color = "#ff9127";
   gui.controllers[11].$name.style.color = "#ff9127";
   gui.controllers[12].$name.style.color = "#ff9127";
-  gui.controllers[13].$name.style.color = "#ff9127";
-  gui.controllers[15].$name.style.color = "#ff9127";
+  gui.controllers[14].$name.style.color = "#ff9127";
 
   controls.reset();
   controls.target.set( params.x, params.y, params.z );

@@ -11,11 +11,36 @@
 
 	<body>
 		<div class="info">Z-VR</div>
-    <div id="name">Model_01</div>
+    <div id="model_name">[Demo model]</div>
 
     <!-- Video -->
     <video id="video" style="display:none" playsinline></video>
-    <input id="video_button"  type="image" src="./data/images/camera_70x56.png" style="position:absolute; right:10px; bottom:10px; opacity:0.5"/>
+    <input id="video_button" type="image" src="./data/icons/outline_videocam_white_48dp.png"/>
+    <script>
+      vb = document.getElementById("video_button");
+			vb.onmouseenter = function () {
+				vb.style.opacity = '1.0';
+			};
+
+			vb.onmouseleave = function () {
+				vb.style.opacity = '0.5';
+			};
+    </script>
+
+    <input id="upload_button" type="image" src="./data/icons/outline_file_upload_white_48dp.png"/>
+    <script>
+      ub = document.getElementById("upload_button");
+			ub.onmouseenter = function () {
+				ub.style.opacity = '1.0';
+			};
+
+			ub.onmouseleave = function () {
+				ub.style.opacity = '0.5';
+			};
+
+      ub.onclick = function() { let form = document.getElementById("form_upload");
+                                form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible"; }
+    </script>
 
     <!-- Imports -->
 		<script type="importmap">
@@ -60,6 +85,9 @@
         formData.append('texture', texture);
         formData.append('normals', normals);
 
+        var model_name = document.getElementById('model_name'); 
+        model_name.innerHTML ='[' + model.name + ']';
+   
         // Create an XMLHttpRequest object
         var xhr = new XMLHttpRequest();
 

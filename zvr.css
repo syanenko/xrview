@@ -33,7 +33,7 @@ a:hover {
 	-ms-user-select: none;
 	user-select: none;
 	pointer-events: none;
-  font-size: 180%;
+  font-size: 200%;
   color: #ff9127;
 	z-index: 1; /* TODO Solve this in HTML */
 }
@@ -44,12 +44,6 @@ a:hover {
   max-height : 100%;
   max-width : 100%;
   z-index: 100;
-}
-
-#vr_button_container {
-	position: relative;
-	text-align: center;
-  z-index: 1;
 }
 
 a, button, input, select {
@@ -101,23 +95,6 @@ a, button, input, select {
 	padding: 10px;
 }
 
-.button {
-  cursor: pointer;
-  text-transform: uppercase;
-  text-align: center;
-  text-transform: unset !important;
-  color: #000000;
-  position: absolute;
-  background-color: #ff9127;
-  font-size: 130%;
-  border-width: 4px;
-  padding: 4px;
-  margin: 5px;
-  left: 12px;
-  width: 80px;
-  border-radius: 4px;
-}
-
 .fname {
   position: absolute;
   left: 110px;
@@ -126,14 +103,34 @@ a, button, input, select {
   font-size: 140%;
 }
 
-#name {
+#model_name {
   position: absolute;
   left: 10px;
   bottom: 10px;
-  color:rgb(255, 255, 255);
+  /* color: #ff9127; */
+  color:rgba(255, 255, 255, 0.5);
   margin: 10px;
-  font-size: 140%;
-  opacity: 0.5;
+  font-size: 160%;
+}
+
+#video_button {
+  position:absolute;
+  right:15px;
+  bottom:74px;
+  opacity:0.5
+}
+
+#upload_button {
+  position:absolute;
+  right:17px;
+  bottom:130px;
+  opacity:0.5
+}
+
+#VRButtonIcon {
+  position: absolute;
+  right:10px;
+  bottom: 10px;
 }
 
 .lil-gui {
@@ -154,9 +151,6 @@ a, button, input, select {
   z-index: 2 !important; /* TODO Solve this in HTML */
 }
 
-/*
-
-*/
 #form_upload {
   position: absolute;
   top: calc(50vh - 200px);
