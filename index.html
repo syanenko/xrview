@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Z-XR</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <head>
+    <title>Z-XR</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="expires" content="timestamp">
-		<link type="text/css" rel="stylesheet" href="zvr.css">
-	</head>
+    <link type="text/css" rel="stylesheet" href="zvr.css">
+  </head>
 
-	<body>
-		<div class="info">Z-VR</div>
+  <body>
+    <div class="info">Z-VR</div>
     <div id="model_name">[Demo model]</div>
 
     <!-- Video -->
@@ -18,40 +18,40 @@
     <input id="video_button" type="image" src="./data/icons/outline_videocam_white_48dp.png"/>
     <script>
       vb = document.getElementById("video_button");
-			vb.onmouseenter = function () {
-				vb.style.opacity = '1.0';
-			};
+      vb.onmouseenter = function () {
+        vb.style.opacity = '1.0';
+      };
 
-			vb.onmouseleave = function () {
-				vb.style.opacity = '0.5';
-			};
+      vb.onmouseleave = function () {
+        vb.style.opacity = '0.5';
+      };
     </script>
 
     <input id="upload_button" type="image" src="./data/icons/outline_file_upload_white_48dp.png"/>
     <script>
       ub = document.getElementById("upload_button");
-			ub.onmouseenter = function () {
-				ub.style.opacity = '1.0';
-			};
+      ub.onmouseenter = function () {
+        ub.style.opacity = '1.0';
+      };
 
-			ub.onmouseleave = function () {
-				ub.style.opacity = '0.5';
-			};
+      ub.onmouseleave = function () {
+        ub.style.opacity = '0.5';
+      };
 
       ub.onclick = function() { let form = document.getElementById("form_upload");
                                 form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible"; }
     </script>
 
     <!-- Imports -->
-		<script type="importmap">
-			{
-				"imports": {
-					"three": "./three/three.module.js",
-					"three/addons/": "./three/jsm/"
-				}
-			}
-		</script>
-		<script type="module" src="zvr.js"></script>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./three/three.module.js",
+          "three/addons/": "./three/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="zvr.js"></script>
 
     <!-- Upload model -->
     <div id="form_upload">
@@ -93,8 +93,8 @@
 
         // Set the request URL
         // TODO: Check on publishing (!)
-        xhr.open('POST', 'http://localhost:8081/upload.php');
-        // xhr.open('POST', 'https:///zxr.yesbird.ru/upload.php');
+        // xhr.open('POST', 'http://localhost:8081/upload.php');
+        xhr.open('POST', 'https:///zxr.yesbird.ru/upload.php');
 
         // Set the request as asynchronous
         xhr.responseType = 'json';
@@ -116,5 +116,5 @@
       });
     </script>
 
-	</body>
+  </body>
 </html>
