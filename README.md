@@ -22,7 +22,7 @@
   http://localhost:3000
   ```
 
-  Connect headset and check connection: 
+  Connect headset by USB and check connection: 
   ```
   .\bin\adb devices
   ```
