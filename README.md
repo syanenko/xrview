@@ -6,9 +6,9 @@
 
   Edit file <em>zvr.js</em> to point to your model:
   ```
-  33: const OBJ_PATH = 'data/models/spiral/spiral.obj';
-  34: const TEX_PATH = 'data/models/spiral/spiral.bmp';
-  35: const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
+  11: const OBJ_PATH = 'data/models/spiral/spiral.obj';
+  12: const TEX_PATH = 'data/models/spiral/spiral.bmp';
+  13: const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
   ```
   Install node: <a href='https://nodejs.org/en/download'>nodejs.org/en/download</a> 
 
