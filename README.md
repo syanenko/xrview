@@ -1,5 +1,5 @@
 # <em>z-xr</em>
- View 3D objects in XR environment. Useful for quick view of Z-Brush exports.<br>
+ View 3D objects in XR environment. Useful for quick view of Z-Brush exports in VR headsets.<br>
  Live demo: <a href='https://zxr.yesbird.ru'>zxr.yesbird.ru</a>
 
 ### <em>Usage</em><br>
