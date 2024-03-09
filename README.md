@@ -21,8 +21,8 @@
   ```
   http://localhost:3000
   ```
-  Try to use video from camera as background by clicking on icon <img src="https://github.com/syanenko/zxr/assets/6688301/15b0cefd-ef55-44d8-98a8-cc21b1bf314c"/>. 
-
+  <img src="https://github.com/syanenko/zxr/assets/6688301/15b0cefd-ef55-44d8-98a8-cc21b1bf314c" width='30'/> use video from camera as background by clicking camera icon.<br>
+  
   Connect headset by USB and check connection: 
   ```
   .\bin\adb devices
@@ -37,7 +37,8 @@
   ```
   http://localhost:3000
   ```
+  <img src="https://github.com/syanenko/zxr/assets/6688301/e265acc3-742b-4d91-9cf0-eb0b1c8df5ba" width='30'/> enter XR mode by clicking cube icon.<br>
   
-  Now you can export model from Z-Brush on PC and view it in headset's browser just by refreshing it.<br>
+  Now you can export model from ZBrush on PC and view it in headset's browser just by refreshing it.<br>
   
   Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/).
