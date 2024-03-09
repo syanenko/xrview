@@ -100,8 +100,6 @@ function init() {
   initController();
 
   // Default model on startup
-  // loadModel({test:false});
-
   loadModel({test:false,
              model: {model: OBJ_PATH, texture: TEX_PATH, normals: NOR_PATH }});
     
@@ -169,8 +167,6 @@ export function loadModel(args)
   if(args.model)
   {
     model = args.model;
-    console.dir(model); // DEBUG !
-
     var objPath = model['model'];
     var texPath = model['texture'];
     var norPath = model['normals']
@@ -192,20 +188,14 @@ export function loadModel(args)
     normalMap = textureLoader.load( norPath );
   }
   
-  // DEBUG !
-  // console.log("Normals: ")
-  // console.dir(normalMap);
-
   // Material
   const material = new THREE.MeshPhongMaterial( {
     color: color,
     specular: 0x222222,
     shininess: 35,
     map: diffuseMap,
-    // specularMap: specularMap,
     normalMap: normalMap,
     normalMapType: THREE.TangentSpaceNormalMap,
-    // normalMapType: THREE.ObjectSpaceNormalMap,
     normalScale: new THREE.Vector2( 2, 2 )
   } );
   material.side = THREE.DoubleSide;
