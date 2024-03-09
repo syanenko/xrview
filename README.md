@@ -1,6 +1,6 @@
 # <em>z-xr</em>
  3D objects viewer in XR environment<br>
- Live demo: <a href='https://zxr.yesbird.ru'>https://zxr.yesbird.ru</a>
+ Live demo: <a href='https://zxr.yesbird.ru'>zxr.yesbird.ru</a>
 
 ### <em>Usage</em><br>
 
@@ -11,7 +11,7 @@
   35: const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
   ```
   Install node:<br>
-  <a href='https://nodejs.org/en/download'>https://nodejs.org/en/download</a> 
+  <a href='https://nodejs.org/en/download'>nodejs.org/en/download</a> 
 
   Install dependencies and run server:
   ```
