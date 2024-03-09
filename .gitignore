@@ -1,6 +1,6 @@
 **/node_modules
 /uploads
-*.bat
+# *.bat
 *.txt
 __**
 
