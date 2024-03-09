@@ -17,10 +17,11 @@
   npm install
   npm start
   ```
-  Locate in PC browser:
+  Open location in PC browser:
   ```
   http://localhost:3000
   ```
+  Try to use video from camera as background by clicking on icon <img src="https://github.com/syanenko/zxr/assets/6688301/15b0cefd-ef55-44d8-98a8-cc21b1bf314c"/>. 
 
   Connect headset by USB and check connection: 
   ```
@@ -32,7 +33,7 @@
   .\bin\adb reverse tcp:3000 tcp:3000
   ```
 
-  Locate in headset's browser:
+  Open location in headset's browser:
   ```
   http://localhost:3000
   ```
