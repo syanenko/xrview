@@ -32,9 +32,8 @@ let video, video_mesh;
 // Default model
 const OBJ_PATH = 'data/models/spiral/spiral.obj';
 const TEX_PATH = 'data/models/spiral/spiral.bmp';
-// const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
-// const TEX_PATH = ''; // Without texture and normals now
 const NOR_PATH = '';
+// const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
 
 // GUI
 const params = {

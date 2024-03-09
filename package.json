@@ -1,0 +1,28 @@
+{
+  "name": "zxr",
+  "version": "0.1.0",
+  "description": "ZBrush models viewer",
+  "main": "zvr.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run dev",
+    "dev": "servez -p 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/syanenko/zxr.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/syanenko/zxr/issues"
+  },
+  "homepage": "https://github.com/syanenko/zxr#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "servez": "^2.1.3"
+  }
+}
