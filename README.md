@@ -1,5 +1,6 @@
 # <em>z-xr</em>
- 3D objects viewer in XR environment
+ 3D objects viewer in XR environment<br>
+ Live demo: <a href='https://zxr.yesbird.ru'>https://zxr.yesbird.ru</a>
 
 ### <em>Usage</em><br>
 
