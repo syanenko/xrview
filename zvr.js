@@ -68,12 +68,6 @@ animate();
 
 // Init
 function init() {
-
-  container = document.createElement( 'div' );
-  container.style.zIndex = '1';
-  container.style.position = 'absolute';
-  document.body.appendChild( container );
-
   // Scene
   scene = new THREE.Scene();
 
@@ -94,6 +88,8 @@ function init() {
   renderer.xr.enabled = true;
   renderer.xr.setReferenceSpaceType( 'local' );
   renderer.xr.setFramebufferScaleFactor( 4.0 );
+
+  container = document.getElementById("container");
   container.appendChild( renderer.domElement );
 
   // Loader
