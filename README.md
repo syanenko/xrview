@@ -10,8 +10,7 @@
   34: const TEX_PATH = 'data/models/spiral/spiral.bmp';
   35: const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
   ```
-  Install node:<br>
-  <a href='https://nodejs.org/en/download'>nodejs.org/en/download</a> 
+  Install node: <a href='https://nodejs.org/en/download'>nodejs.org/en/download</a> 
 
   Install dependencies and run server:
   ```
