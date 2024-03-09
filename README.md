@@ -1,7 +1,7 @@
 # <em>z-xr</em>
  3D objects viewer in XR environment
 
-### <em>How to run</em><br>
+### <em>Usage</em><br>
 
   Edit file zvr.js to point to your model:
   ```
@@ -34,3 +34,7 @@
   ```
   http://localhost:3000
   ```
+  
+  Now you can export model from Z-Brush on PC and view it in headset's browser just by refreshing it.<br>
+  
+  Contact: [LinkedIn](https://www.linkedin.com/in/sergey-yanenko-57b21a96/).
