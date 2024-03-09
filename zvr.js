@@ -70,6 +70,8 @@ animate();
 function init() {
 
   container = document.createElement( 'div' );
+  container.style.zIndex = '1';
+  container.style.position = 'absolute';
   document.body.appendChild( container );
 
   // Scene
@@ -80,7 +82,7 @@ function init() {
   camera.position.z = 1;
   scene.add( camera );
 
-  initVideo();
+  video = document.getElementById( 'video' );
   initLights();
 
   // Renderer
@@ -129,35 +131,13 @@ function switchVideo()
     }
 
     video.play();
-    video_mesh.visible = true;
+    video.style.visibility = 'visible';
 
-    controls.reset();
-    controls.target.fromArray( modelPosition );
-    controls.enabled = false;
   } else {
-    video_mesh.visible = false;
+    video.style.visibility = 'hidden';
     video.srcObject.getTracks()[0].stop();
     video.srcObject = null;
-
-    controls.enabled = true;
   }
-}
-
-// Video stream
-function initVideo()
-{
-  // TODO: Fit to window
-  video = document.getElementById( 'video' );
-  const texture = new THREE.VideoTexture( video );
-  texture.colorSpace = THREE.SRGBColorSpace;
-  const geometry = new THREE.PlaneGeometry(160, 90);
-  const material = new THREE.MeshBasicMaterial( { map: texture } );
-  video_mesh = new THREE.Mesh( geometry, material );
-  video_mesh.lookAt( camera.position );
-  video_mesh.position.set(0,0,-60);
-  video_mesh.scale.x = -1; // Mirror
-  video_mesh.visible = false;
-  scene.add( video_mesh );
 }
 
 // Load model
@@ -261,7 +241,7 @@ function initControls()
   controls.target.set( params.x, params.y, params.z );
   controls.update();
   controls.enablePan = true;
-  controls.enableDamping = true;
+  // controls.enableDamping = true;
 }
 
 // Init lights
