@@ -19,14 +19,17 @@
   ```
   http://localhost:3000
   ```
-  
+
   Connect headset and check connection: 
+  ```
   .\bin\adb devices
-  
+  ```
+
   Forward port to headset:
   ```
   .\bin\adb reverse tcp:3000 tcp:3000
   ```
+
   Locate in headset's browser:
   ```
   http://localhost:3000
