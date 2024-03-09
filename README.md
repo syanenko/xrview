@@ -4,7 +4,7 @@
 
 ### <em>Usage</em><br>
 
-  Edit file <em>zvr.js</em> to point to your model:
+  Edit file <b>zvr.js</b> to point to your model:
   ```
   11: const OBJ_PATH = 'data/models/spiral/spiral.obj';
   12: const TEX_PATH = 'data/models/spiral/spiral.bmp';
