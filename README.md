@@ -22,7 +22,8 @@
   http://localhost:3000
   ```
   <img src="https://github.com/syanenko/zxr/assets/6688301/15b0cefd-ef55-44d8-98a8-cc21b1bf314c" width='30'/> use video from camera as background by clicking camera icon.<br>
-  
+
+  Enable developer mode on your headset.<br>
   Connect headset by USB and check connection: 
   ```
   .\bin\adb devices
