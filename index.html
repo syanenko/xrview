@@ -41,7 +41,7 @@
       };
     </script>
 
-    <!-- Uncomment to enable upload. You will need PHP enabled on server side. -->
+    <!-- Uncomment to enable upload. You will need PHP enabled on server's side. -->
     <input id="upload_button" type="image" src="./data/icons/outline_file_upload_white_48dp.png", style='z-index:2'/>
     <script>
       ub = document.getElementById("upload_button");
@@ -71,10 +71,10 @@
     <!-- Upload model -->
     <div id="form_upload">
       <form encType="multipart/form-data">
-          Upload model<br/><br/>
-        <input type="file"    name="model"   /><br/>
-        <input type="file"    name="texture" /><br/>
-        <input type="file"    name="normals" /><br/><br/>
+          <h3>Upload a model</h3>
+        Geometry&nbsp;<input type="file" name="model"   accept=".obj"/><br/>
+        Texture&nbsp;&nbsp;<input type="file" name="texture" accept=".bmp,.png,.jpeg,.jpg"/><br/>
+        Normals&nbsp;&nbsp;<input type="file" name="normals" accept=".bmp,.png,.jpeg,.jpg"/><br/><br/>
         <input type="submit"  value="Upload" />
         <input type="button"  value="Cancel" onclick="parentElement.parentElement.style.visibility = 'hidden'"/>
       </form>

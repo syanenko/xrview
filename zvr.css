@@ -162,6 +162,8 @@ a, button, input, select {
   background-color:rgba(75, 75, 75, 0.7);
   font-size: 16px;
   padding: 30px;
+  padding-top: 20px;
+  padding-left: 40px;
   visibility: hidden;
   z-index: 999;
 }
