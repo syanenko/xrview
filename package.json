@@ -2,7 +2,7 @@
   "name": "zxr",
   "version": "0.1.0",
   "description": "ZBrush models viewer",
-  "main": "zvr.js",
+  "main": "zxr.js",
   "directories": {
     "doc": "doc"
   },

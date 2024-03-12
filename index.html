@@ -16,15 +16,25 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="expires" content="timestamp">
-    <link type="text/css" rel="stylesheet" href="zvr.css">
+    <link type="text/css" rel="stylesheet" href="zxr.css">
   </head>
 
   <body>
-    <div class="info">Z-VR</div>
+    <!-- About (old browsers ?)  -->
+    <dialog id="about">
+      <div style="font-size: 24px; color:#ff9127">Z-XR</div>
+      <p>ZBrush-exported models viewer in AR/VR environment.</p>
+      <br><br><br><br>
+      <p>Code: <a href="https://github.com/syanenko/zxr">GitHub</a><br>Contact: <a href="https://www.linkedin.com/in/sergey-yanenko-57b21a96/">LinkedIn</a></p>
+      <form method="dialog" style="text-align:center">
+        <button>OK</button>
+      </form>
+    </dialog>
+
+    <div id='log'  style='z-index:999' class="info" onclick="about.showModal()">Z-XR</div>
     <div id="model_name" style='z-index:2'>[Demo model]</div>
     <!-- Render -->
-   <div id="container" style='height: 100vh; width: 100%; position: absolute; z-index:1'></div>
-
+    <div id="container" style='height: 100vh; width: 100%; position: absolute; z-index:1'></div>
     <!-- Video
     <video id="video" style='transform: translate(-50%, -50%);  position: absolute;  top: 50%; left: 50%; display:none; object-fit: fill;' playsinline></video>
     -->
@@ -66,7 +76,7 @@
         }
       }
     </script>
-    <script type="module" src="zvr.js"></script>
+    <script type="module" src="zxr.js"></script>
 
     <!-- Upload model -->
     <div id="form_upload">

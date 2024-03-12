@@ -23,7 +23,6 @@ a:hover {
 }
 
 .info {
-	position: absolute;
   top: 3px;
   left: 10px;
 	width: 100%;
@@ -34,10 +33,10 @@ a:hover {
 	-webkit-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-	pointer-events: none;
   font-size: 200%;
   color: #ff9127;
-	z-index: 1; /* TODO Solve this in HTML */
+  z-index: 2;
+  cursor: pointer;
 }
 
 #flat_image {
@@ -153,6 +152,28 @@ a, button, input, select {
   z-index: 2 !important; /* TODO Solve this in HTML */
 }
 
+#about
+{
+  width: 600px;
+
+  -moz-box-shadow: 5px 5px 7px #535353;
+  -webkit-box-shadow: 5px 5px 7px #535353;
+  box-shadow: 5px 5px 7px #535353;
+
+  -moz-border-radius: 8px 8px 8px 8px;
+  -webkit-border-radius: 8px;
+  border-radius: 8px 8px 8px 8px;
+
+  border-width: 0px;
+  font-size: 16px;
+  color:rgba(255, 255, 255, 0.8);
+  background-color:rgba(75, 75, 75, 0.8);
+
+  padding: 20px;
+  padding-top: 30px;
+  padding-left: 40px;
+}
+
 #form_upload {
   position: absolute;
   top: calc(50vh - 200px);
@@ -168,3 +189,23 @@ a, button, input, select {
   z-index: 999;
 }
 
+#logo
+{
+  display:block;
+  width:50px;
+  top: -10px;
+  left: 0px;
+  z-index:2;
+
+/*
+  display:inline-block;
+
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  font-size: 230%;
+  font-style: italic;
+  color: #ffac13;
+*/
+  cursor: pointer;
+}
