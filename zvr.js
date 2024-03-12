@@ -1,11 +1,11 @@
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { OBJLoader } from 'three/addons/loaders/OBJLoader.js';
-import { VRButtonIcon } from 'three/addons/webxr/VRButtonIcon.js';
-import { InteractiveGroup } from 'three/addons/interactive/InteractiveGroup.js';
-import { HTMLMesh } from 'three/addons/interactive/HTMLMesh.js';
-import { GUI } from 'three/addons/libs/lil-gui.esm.min.js';
-import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
+import * as THREE from './three/three.module.js';
+import { OrbitControls } from './three/jsm/controls/OrbitControls.js';
+import { OBJLoader } from './three/jsm/loaders/OBJLoader.js';
+import { VRButtonIcon } from './three/jsm/webxr/VRButtonIcon.js';
+import { InteractiveGroup } from './three/jsm/interactive/InteractiveGroup.js';
+import { HTMLMesh } from './three/jsm/interactive/HTMLMesh.js';
+import { GUI } from './three/jsm/libs/lil-gui.esm.min.js';
+import { XRControllerModelFactory } from './three/jsm/webxr/XRControllerModelFactory.js';
 
 // Model to load
 const OBJ_PATH = 'data/models/spiral/spiral.obj';
