@@ -27,11 +27,11 @@
       <br><br><br><br>
       <p>Code: <a href="https://github.com/syanenko/zxr">GitHub</a><br>Contact: <a href="https://www.linkedin.com/in/sergey-yanenko-57b21a96/">LinkedIn</a></p>
       <form method="dialog" style="text-align:center">
-        <button>OK</button>
+        <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
       </form>
     </dialog>
 
-    <div id='log'  style='z-index:999' class="info" onclick="about.showModal()">Z-XR</div>
+    <div id='logo' onclick="about.showModal()">Z-XR</div>
     <div id="model_name" style='z-index:2'>[Demo model]</div>
     <!-- Render -->
     <div id="container" style='height: 100vh; width: 100%; position: absolute; z-index:1'></div>
@@ -80,12 +80,12 @@
 
     <!-- Upload model -->
     <div id="form_upload">
-      <form encType="multipart/form-data">
+      <form encType="multipart/form-data" style="text-align:left">
           <h3>Upload a model</h3>
         Geometry&nbsp;<input type="file" name="model"   accept=".obj"/><br/>
         Texture&nbsp;&nbsp;<input type="file" name="texture" accept=".bmp,.png,.jpeg,.jpg"/><br/>
         Normals&nbsp;&nbsp;<input type="file" name="normals" accept=".bmp,.png,.jpeg,.jpg"/><br/><br/>
-        <input type="submit"  value="Upload" />
+        <input type="submit"  value="Upload" style="margin-left:80px"/>&nbsp;&nbsp;&nbsp;&nbsp;
         <input type="button"  value="Cancel" onclick="parentElement.parentElement.style.visibility = 'hidden'"/>
       </form>
     </duv>
