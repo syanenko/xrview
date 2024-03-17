@@ -8,10 +8,15 @@ import { GUI } from './three/jsm/libs/lil-gui.esm.min.js';
 import { XRControllerModelFactory } from './three/jsm/webxr/XRControllerModelFactory.js';
 
 // Model to load
+/*
 const OBJ_PATH = 'data/models/spiral/spiral.obj';
 const TEX_PATH = 'data/models/spiral/spiral.bmp';
 const NOR_PATH = '';
+*/
 // const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
+const OBJ_PATH = 'data/models/venus/venus.obj';
+const TEX_PATH = '';
+const NOR_PATH = '';
 
 let container, loader;
 let camera, scene, renderer;
@@ -29,9 +34,8 @@ let directionalLight, pointLight, ambientLight;
 
 let model;
 // Defaults
-let modelPosition = [0, 0, -1.6];
+let modelPosition = [0, -1000, -3000];
 let modelRotation = [0, 0, 0];
-
 let video, video_mesh;
 
 // GUI
@@ -71,8 +75,7 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera
-  camera = new THREE.PerspectiveCamera( 85, window.innerWidth / window.innerHeight, 0.01, 10000 );
-  camera.position.z = 1;
+  camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.01, 10000 );
   scene.add( camera );
 
   video = document.getElementById( 'video' );
@@ -94,7 +97,7 @@ function init() {
   // Loader
   textureLoader = new THREE.TextureLoader();
 
-  initControls();
+  // initControls();
   initGUI();  
   initController();
 
@@ -210,7 +213,7 @@ export function loadModel(args)
     model.rotateY(modelRotation[1]);
     model.rotateZ(modelRotation[2]);
 
-    controls.target.fromArray(modelPosition);
+    // controls.target.fromArray(modelPosition);
     model.name='model';
     scene.add( model );
 
@@ -220,6 +223,7 @@ export function loadModel(args)
 window.loadModel = loadModel;
 
 // Init orbit controlls
+/*
 function initControls()
 {
   controls = new OrbitControls( camera, renderer.domElement );
@@ -228,6 +232,7 @@ function initControls()
   controls.enablePan = true;
   // controls.enableDamping = true;
 }
+*/
 
 // Init lights
 function initLights()
@@ -240,7 +245,7 @@ function initLights()
   scene.add( pointLight );
 
   directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
-  directionalLight.position.set( 1, - 0.5, - 1 );
+  directionalLight.position.set( -1, -0.5, 1 );
   scene.add( directionalLight );
 
   // Hilight controller
@@ -255,12 +260,12 @@ function initGUI()
   // GUI
   gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
-  gui.add( params, 'x', -5.0, 5.0, 0.01 ).name( 'X' ).onChange(onX);
-  gui.add( params, 'y', -5.0, 5.0, 0.01 ).name( 'Y' ).onChange(onY);
-  gui.add( params, 'z', -10, -0.3, 0.01 ).name( 'Z' ).onChange(onZ);
-  gui.add( params, 'rx', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot X' ).onChange( onRotation );
-  gui.add( params, 'ry', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
-  gui.add( params, 'rz', -Math.PI/2, Math.PI/2, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
+  gui.add( params, 'x', -4000, 4000, 1 ).name( 'X' ).onChange(onX);
+  gui.add( params, 'y', -4000, 4000, 1 ).name( 'Y' ).onChange(onY);
+  gui.add( params, 'z', -4000, 4000, 1 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'rx', -Math.PI, Math.PI, 0.01 ).name( 'Rot X' ).onChange( onRotation );
+  gui.add( params, 'ry', -Math.PI, Math.PI, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
+  gui.add( params, 'rz', -Math.PI, Math.PI, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
   gui.add( params, 'anx').hide();
   gui.add( params, 'any').hide();
   gui.add( params, 'anz').hide();
@@ -393,8 +398,8 @@ function onReset()
   gui.controllers[12].$name.style.color = "#ff9127";
   gui.controllers[14].$name.style.color = "#ff9127";
 
-  controls.reset();
-  controls.target.set( params.x, params.y, params.z );
+  //controls.reset();
+  //controls.target.set( params.x, params.y, params.z );
 
   if (typeof model !== "undefined") {
     model.position.fromArray(modelPosition);
@@ -414,6 +419,7 @@ renderer.xr.addEventListener( 'sessionstart', function ( event ) {
 // XR end
 renderer.xr.addEventListener( 'sessionend', function ( event ) {
   renderer.setClearColor(new THREE.Color(0x000), 0);
+  onWindowResize();
   gui_mesh.visible = false;
 });
 
@@ -432,7 +438,7 @@ function animate() {
 // Render
 function render() {
   if (typeof model == "undefined") { return; }
-  controls.update();
+  // controls.update();
 
   if (params.anx) {
     model.rotateX(params.speed);
