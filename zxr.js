@@ -1,3 +1,6 @@
+// TODO
+// -- Set GUI controls limits on loading model
+
 import * as THREE from './three/three.module.js';
 import { OrbitControls } from './three/jsm/controls/OrbitControls.js';
 import { OBJLoader } from './three/jsm/loaders/OBJLoader.js';
@@ -6,7 +9,6 @@ import { InteractiveGroup } from './three/jsm/interactive/InteractiveGroup.js';
 import { HTMLMesh } from './three/jsm/interactive/HTMLMesh.js';
 import { GUI } from './three/jsm/libs/lil-gui.esm.min.js';
 import { XRControllerModelFactory } from './three/jsm/webxr/XRControllerModelFactory.js';
-
 // Model to load
 /*
 const OBJ_PATH = 'data/models/spiral/spiral.obj';
@@ -34,7 +36,7 @@ let directionalLight, pointLight, ambientLight;
 
 let model;
 // Defaults
-let modelPosition = [0, 0, -3000];
+let modelPosition = [0, 0, 0];
 let modelRotation = [0, 0, 0];
 let video, video_mesh;
 
@@ -75,7 +77,7 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera
-  camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.01, 10000 );
+  camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1100 );
   scene.add( camera );
 
   video = document.getElementById( 'video' );
@@ -210,9 +212,15 @@ export function loadModel(args)
 
     var bb = new THREE.Box3().setFromObject(model);
     let max_side = Math.max(bb.max.x - bb.min.x, bb.max.y - bb.min.y, bb.max.z - bb.min.z);
-    modelPosition = [0, 0, -max_side * 1.5];
-
+    modelPosition = [0, 0, Math.floor(-max_side * 1.5)];
     model.position.fromArray(modelPosition);
+
+    // DEBUG ! Set all controls limits
+    gui.children[3]._min = -1000;
+    gui.children[3]._max = 0;
+    gui.children[3].initialValue = modelPosition[2];
+    gui.reset();
+
     model.rotateX(modelRotation[0]);
     model.rotateY(modelRotation[1]);
     model.rotateZ(modelRotation[2]);
@@ -220,7 +228,7 @@ export function loadModel(args)
     // controls.target.fromArray(modelPosition);
     model.name='model';
     scene.add( model );
-
+  
     params.switch_any(); // Turntable by default
   });
 }
@@ -266,7 +274,7 @@ function initGUI()
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
   gui.add( params, 'x', -1000, 1000, 1 ).name( 'X' ).onChange(onX);
   gui.add( params, 'y', -1000, 1000, 1 ).name( 'Y' ).onChange(onY);
-  gui.add( params, 'z', -5000, 0, 1 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'z', -1000, 0, 1 ).name( 'Z' ).onChange(onZ);
   gui.add( params, 'rx', -Math.PI, Math.PI, 0.01 ).name( 'Rot X' ).onChange( onRotation );
   gui.add( params, 'ry', -Math.PI, Math.PI, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
   gui.add( params, 'rz', -Math.PI, Math.PI, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
