@@ -34,7 +34,7 @@ let directionalLight, pointLight, ambientLight;
 
 let model;
 // Defaults
-let modelPosition = [0, -1000, -3000];
+let modelPosition = [0, 0, -3000];
 let modelRotation = [0, 0, 0];
 let video, video_mesh;
 
@@ -82,7 +82,7 @@ function init() {
   initLights();
 
   // Renderer
-  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer = new THREE.WebGLRenderer({ antialias: true, maxSamples: 4, alpha: true });
   renderer.setPixelRatio( window.devicePixelRatio );
   renderer.setSize( window.innerWidth, window.innerHeight );
   
@@ -208,6 +208,10 @@ export function loadModel(args)
     const geometry = object.children[0].geometry;
     model = new THREE.Mesh( geometry, material );
 
+    var bb = new THREE.Box3().setFromObject(model);
+    let max_side = Math.max(bb.max.x - bb.min.x, bb.max.y - bb.min.y, bb.max.z - bb.min.z);
+    modelPosition = [0, 0, -max_side * 1.5];
+
     model.position.fromArray(modelPosition);
     model.rotateX(modelRotation[0]);
     model.rotateY(modelRotation[1]);
@@ -260,9 +264,9 @@ function initGUI()
   // GUI
   gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
-  gui.add( params, 'x', -4000, 4000, 1 ).name( 'X' ).onChange(onX);
-  gui.add( params, 'y', -4000, 4000, 1 ).name( 'Y' ).onChange(onY);
-  gui.add( params, 'z', -4000, 4000, 1 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'x', -1000, 1000, 1 ).name( 'X' ).onChange(onX);
+  gui.add( params, 'y', -1000, 1000, 1 ).name( 'Y' ).onChange(onY);
+  gui.add( params, 'z', -5000, 0, 1 ).name( 'Z' ).onChange(onZ);
   gui.add( params, 'rx', -Math.PI, Math.PI, 0.01 ).name( 'Rot X' ).onChange( onRotation );
   gui.add( params, 'ry', -Math.PI, Math.PI, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
   gui.add( params, 'rz', -Math.PI, Math.PI, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
