@@ -1,5 +1,5 @@
 // TODO
-// -- Set GUI controls limits on loading model
+// -- Fix camera changes on VR mode
 
 import * as THREE from './three/three.module.js';
 import { OrbitControls } from './three/jsm/controls/OrbitControls.js';
@@ -74,6 +74,7 @@ function init() {
 
   // Camera
   camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1100 );
+  camera.position.set( 0, 0, 0 );
   scene.add( camera );
 
   video = document.getElementById( 'video' );
@@ -426,12 +427,20 @@ renderer.xr.addEventListener( 'sessionstart', function ( event ) {
   if(!video.paused) {
     switchVideo();
   }
+  // console.log(camera);
 });
 
 // XR end
 renderer.xr.addEventListener( 'sessionend', function ( event ) {
   renderer.setClearColor(new THREE.Color(0x000), 0);
-  onWindowResize();
+  /*
+  // onWindowResize();
+  camera.near = .1;
+  camera.far = 1100;
+  camera.position.set( 0, 0, 0 );
+  camera.updateProjectionMatrix();
+  */
+  // console.log(camera);
   gui_mesh.visible = false;
 });
 
