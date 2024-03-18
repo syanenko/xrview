@@ -9,16 +9,16 @@ import { InteractiveGroup } from './three/jsm/interactive/InteractiveGroup.js';
 import { HTMLMesh } from './three/jsm/interactive/HTMLMesh.js';
 import { GUI } from './three/jsm/libs/lil-gui.esm.min.js';
 import { XRControllerModelFactory } from './three/jsm/webxr/XRControllerModelFactory.js';
+
 // Model to load
-/*
-const OBJ_PATH = 'data/models/spiral/spiral.obj';
-const TEX_PATH = 'data/models/spiral/spiral.bmp';
-const NOR_PATH = '';
-*/
-// const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
 const OBJ_PATH = 'data/models/venus/venus.obj';
 const TEX_PATH = '';
 const NOR_PATH = '';
+/* 
+const OBJ_PATH = 'data/models/spiral/spiral.obj';
+const TEX_PATH = 'data/models/spiral/spiral.bmp';
+const NOR_PATH = 'data/models/spiral/spiral_nm.bmp';
+*/
 
 let container, loader;
 let camera, scene, renderer;
@@ -34,21 +34,17 @@ let controls;
 let controller;
 let directionalLight, pointLight, ambientLight;
 
-let model;
-// Defaults
-let modelPosition = [0, 0, 0];
-let modelRotation = [0, 0, 0];
-let video, video_mesh;
+let model, video;
 
 // GUI
 const params = {
   scale: 1.0,
-  x:     modelPosition[0],
-  y:     modelPosition[1],
-  z:     modelPosition[2],
-  rx:    modelRotation[0],
-  ry:    modelRotation[1],
-  rz:    modelRotation[2],
+  x:     0,
+  y:     0,
+  z:     0,
+  rx:    0,
+  ry:    0,
+  rz:    0,
   anx: false,
   any: false,
   anz: false,
@@ -211,21 +207,29 @@ export function loadModel(args)
     model = new THREE.Mesh( geometry, material );
 
     var bb = new THREE.Box3().setFromObject(model);
-    let max_side = Math.max(bb.max.x - bb.min.x, bb.max.y - bb.min.y, bb.max.z - bb.min.z);
-    modelPosition = [0, 0, Math.floor(-max_side * 1.5)];
-    model.position.fromArray(modelPosition);
+    let width  = bb.max.x - bb.min.x;
+    let height = bb.max.y - bb.min.y; 
+    let depth  = bb.max.z - bb.min.z;
+    let maxSide = Math.floor(Math.max(width, height, depth));
+    model.position.copy(new THREE.Vector3( 0, 0, -maxSide * 1.5));
 
-    // DEBUG ! Set all controls limits
-    gui.children[3]._min = -1000;
+    // X
+    gui.children[1]._min = -maxSide * 2;
+    gui.children[1]._max =  maxSide * 2;
+    gui.children[1].initialValue = 0;
+
+    // Y
+    gui.children[2]._min = -maxSide * 2;
+    gui.children[2]._max =  maxSide * 2;
+    gui.children[2].initialValue = 0;
+
+    // Z (depth)
+    gui.children[3]._min = model.position.z * 3;
     gui.children[3]._max = 0;
-    gui.children[3].initialValue = modelPosition[2];
+    gui.children[3].initialValue = model.position.z;
     gui.reset();
 
-    model.rotateX(modelRotation[0]);
-    model.rotateY(modelRotation[1]);
-    model.rotateZ(modelRotation[2]);
-
-    // controls.target.fromArray(modelPosition);
+    // controls.target.copy(modelPosition);
     model.name='model';
     scene.add( model );
   
@@ -272,9 +276,9 @@ function initGUI()
   // GUI
   gui = new GUI( {width: 300, title:"Settings", closeFolders:true} ); // Check 'closeFolders' - not working
   gui.add( params, 'scale', 0.1, 5.0, 0.01 ).name( 'Scale' ).onChange(onScale);
-  gui.add( params, 'x', -1000, 1000, 1 ).name( 'X' ).onChange(onX);
-  gui.add( params, 'y', -1000, 1000, 1 ).name( 'Y' ).onChange(onY);
-  gui.add( params, 'z', -1000, 0, 1 ).name( 'Z' ).onChange(onZ);
+  gui.add( params, 'x', -300, 300, 0.01 ).name( 'X' ).onChange(onX);
+  gui.add( params, 'y', -200, 200, 0.01 ).name( 'Y' ).onChange(onY);
+  gui.add( params, 'z', -1000, 0, 0.01 ).name( 'Z' ).onChange(onZ);
   gui.add( params, 'rx', -Math.PI, Math.PI, 0.01 ).name( 'Rot X' ).onChange( onRotation );
   gui.add( params, 'ry', -Math.PI, Math.PI, 0.01 ).name( 'Rot Y' ).onChange( onRotation );
   gui.add( params, 'rz', -Math.PI, Math.PI, 0.01 ).name( 'Rot Z' ).onChange( onRotation );
@@ -412,10 +416,6 @@ function onReset()
 
   //controls.reset();
   //controls.target.set( params.x, params.y, params.z );
-
-  if (typeof model !== "undefined") {
-    model.position.fromArray(modelPosition);
-  }
 }
 
 // XR start 
