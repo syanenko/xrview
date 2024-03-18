@@ -2,7 +2,6 @@
 // -- Fix camera changes on VR mode
 
 import * as THREE from './three/three.module.js';
-import { OrbitControls } from './three/jsm/controls/OrbitControls.js';
 import { OBJLoader } from './three/jsm/loaders/OBJLoader.js';
 import { VRButtonIcon } from './three/jsm/webxr/VRButtonIcon.js';
 import { InteractiveGroup } from './three/jsm/interactive/InteractiveGroup.js';
@@ -30,7 +29,6 @@ let beam;
 const beam_color = 0xffffff;
 const beam_hilight_color = 0x222222;
 
-let controls;
 let controller;
 let directionalLight, pointLight, ambientLight;
 
@@ -96,7 +94,6 @@ function init() {
   // Loader
   textureLoader = new THREE.TextureLoader();
 
-  // initControls();
   initGUI();  
   initController();
 
@@ -159,7 +156,6 @@ export function loadModel(args)
     const mat = new THREE.MeshPhongMaterial( {color: 0x00fa00, transparent:false, side: THREE.DoubleSide } );
     model = new THREE.Mesh(geometry, mat);
     model.translateZ(-0.4);
-    controls.target.set(0, 0, -0.4);
     model.name='model';
     scene.add(model);
     return;
@@ -230,7 +226,6 @@ export function loadModel(args)
     gui.children[3].initialValue = model.position.z;
     gui.reset();
 
-    // controls.target.copy(modelPosition);
     model.name='model';
     scene.add( model );
   
@@ -238,18 +233,6 @@ export function loadModel(args)
   });
 }
 window.loadModel = loadModel;
-
-// Init orbit controlls
-/*
-function initControls()
-{
-  controls = new OrbitControls( camera, renderer.domElement );
-  controls.target.set( params.x, params.y, params.z );
-  controls.update();
-  controls.enablePan = true;
-  // controls.enableDamping = true;
-}
-*/
 
 // Init lights
 function initLights()
@@ -414,9 +397,6 @@ function onReset()
   gui.controllers[11].$name.style.color = "#ff9127";
   gui.controllers[12].$name.style.color = "#ff9127";
   gui.controllers[14].$name.style.color = "#ff9127";
-
-  //controls.reset();
-  //controls.target.set( params.x, params.y, params.z );
 }
 
 // XR start 
@@ -459,7 +439,6 @@ function animate() {
 // Render
 function render() {
   if (typeof model == "undefined") { return; }
-  // controls.update();
 
   if (params.anx) {
     model.rotateX(params.speed);
