@@ -11,26 +11,26 @@
       gtag('config', 'G-4BTQWYDYSB');
     </script>
 
-    <title>Z-XR</title>
+    <title>XR-View</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="expires" content="timestamp">
-    <link type="text/css" rel="stylesheet" href="zxr.css">
+    <link type="text/css" rel="stylesheet" href="xrview.css">
   </head>
 
   <body>
     <!-- About (old browsers ?)  -->
     <dialog id="about">
-      <div style="font-size: 24px; color:#ff9127">Z-XR</div>
-      <p>ZBrush-exported (obj) models viewer in XR environment.</p>
+      <div style="font-size: 24px; color:#ff9127">XR-View</div>
+      <p>3D models viewer in XR environment, supports Wavefront (OBJ) file format.</p>
       <p>Code: <a href="https://github.com/syanenko/zxr">GitHub</a><br>Contact: <a href="https://www.linkedin.com/in/sergey-yanenko-57b21a96/">LinkedIn</a></p>
       <form method="dialog" style="text-align:center">
         <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
       </form>
     </dialog>
 
-    <div id='logo' onclick="about.showModal()">Z-XR</div>
+    <div id='logo' onclick="about.showModal()">XR-View</div>
     <div id="model_name" style='z-index:2'>[Demo model]</div>
     <!-- Render -->
     <div id="container" style='height: 100vh; width: 100%; position: absolute; z-index:1'></div>
@@ -75,7 +75,7 @@
         }
       }
     </script>
-    <script type="module" src="zxr.js"></script>
+    <script type="module" src="xrview.js"></script>
 
     <!-- Upload model -->
     <div id="form_upload">
@@ -118,8 +118,8 @@
         var xhr = new XMLHttpRequest();
 
         // Set the request url - check it before publishing
-        xhr.open('POST', 'http://localhost:8081/upload.php');
-        // xhr.open('POST', 'https:///zxr.yesbird.ru/upload.php');
+        // xhr.open('POST', 'http://localhost:3000/upload.php');
+        xhr.open('POST', 'https:///xrview.yesbird.ru/upload.php');
 
         // Set the request as asynchronous
         xhr.responseType = 'json';
