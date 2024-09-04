@@ -1,10 +1,10 @@
-# <em>z-xr</em>
+# <em>XR-View</em>
  View 3D objects in XR environment. Useful for quick view of ZBrush exports in VR headsets.<br>
- Live demo: <a href='https://zxr.yesbird.ru'>zxr.yesbird.ru</a>
+ Live demo: <a href='https://xrview.yesbird.ru'>xrview.yesbird.ru</a>
 
 ### <em>Usage</em><br>
 
-  Edit file <b>zxr.js</b> to point to your model:
+  Edit file <b>xrview.js</b> to point to your model:
   ```
   11: const OBJ_PATH = 'data/models/spiral/spiral.obj';
   12: const TEX_PATH = 'data/models/spiral/spiral.bmp';
