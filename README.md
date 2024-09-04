@@ -1,5 +1,5 @@
 # <em>XR-View</em>
- View 3D objects in XR environment. Useful for quick view of ZBrush exports in VR headsets.<br>
+ View 3D models (Wavefront OBJ format) in XR environment.<br>
  Live demo: <a href='https://xrview.yesbird.ru'>xrview.yesbird.ru</a>
 
 ### <em>Usage</em><br>
