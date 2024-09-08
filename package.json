@@ -1,8 +1,8 @@
 {
-  "name": "zxr",
+  "name": "xrview",
   "version": "0.1.0",
-  "description": "ZBrush models viewer",
-  "main": "zxr.js",
+  "description": "Wavefront (OBJ) models viewer",
+  "main": "xrview.js",
   "directories": {
     "doc": "doc"
   },
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/syanenko/zxr.git"
+    "url": "git+https://github.com/syanenko/xrview.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/syanenko/zxr/issues"
+    "url": "https://github.com/syanenko/xrview/issues"
   },
-  "homepage": "https://github.com/syanenko/zxr#readme",
+  "homepage": "https://github.com/syanenko/xrview#readme",
   "dependencies": {},
   "devDependencies": {
     "servez": "^2.1.3"
