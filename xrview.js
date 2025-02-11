@@ -286,9 +286,9 @@ function initGUI()
   gui.add( params, 'anx').hide();
   gui.add( params, 'any').hide();
   gui.add( params, 'anz').hide();
-  gui.add( params, 'switch_anx').name( 'Animate X' );
-  gui.add( params, 'switch_any').name( 'Animate Y' );
-  gui.add( params, 'switch_anz').name( 'Animate Z' );
+  gui.add( params, 'switch_anx').name( 'Rotate X' );
+  gui.add( params, 'switch_any').name( 'Rotate Y' );
+  gui.add( params, 'switch_anz').name( 'Rotate Z' );
   gui.add( params, 'speed', -0.02, 0.02, 0.001 ).name( 'Speed' ).onChange( ()=>{param_changed = true;} );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(onReset); onReset();
 
