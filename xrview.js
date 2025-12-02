@@ -1,6 +1,16 @@
 // TODO
-// -- Fix camera changes on VR mode
-
+//
+// - Get Glaze view as /upload
+// - Add GUI to XR for scale / translate as in MathView
+// - Publish on ZBrush central
+//
+// -- View
+// - Geometry: low-poly worlds, sculpture (mat. selection)
+// - Video: stereo
+// - Panoramas: stereo / mono
+// - Projections: plane / cylinder / sphere
+// - Objects: gems, 
+//
 import * as THREE from './three/three.module.js';
 import { OrbitControls } from './three/jsm/controls/OrbitControls.js';
 import { OBJLoader } from './three/jsm/loaders/OBJLoader.js';
@@ -190,6 +200,7 @@ export function loadModel(args)
   }
   
   // Material
+/*
   const material = new THREE.MeshPhongMaterial( {
     color: color,
     specular: 0x222222,
@@ -199,6 +210,15 @@ export function loadModel(args)
     normalMapType: THREE.TangentSpaceNormalMap,
     normalScale: new THREE.Vector2( 2, 2 )
   } );
+*/
+  const material = new THREE.MeshLambertMaterial( {
+    color: color,
+    map: diffuseMap,
+    normalMap: normalMap,
+    normalMapType: THREE.TangentSpaceNormalMap,
+    normalScale: new THREE.Vector2( 2, 2 )
+  } );
+
   material.side = THREE.DoubleSide;
   
   // Geometry
@@ -257,9 +277,9 @@ function initLights()
   ambientLight = new THREE.AmbientLight( 0xffffff );
   scene.add( ambientLight );
 
-  pointLight = new THREE.PointLight( 0xffffff, 30 );
-  pointLight.position.set( 0, 0, 6 );
-  scene.add( pointLight );
+  // pointLight = new THREE.PointLight( 0xffffff, 30 );
+  // pointLight.position.set( 0, 0, 6 );
+  // scene.add( pointLight );
 
   directionalLight = new THREE.DirectionalLight( 0xffffff, 3 );
   directionalLight.position.set( -1, -0.5, 1 );
