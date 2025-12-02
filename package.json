@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run dev",
-    "dev": "servez -p 3000"
+    "dev": "servez -p 8085 --ssl"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,11 @@
     "url": "https://github.com/syanenko/xrview/issues"
   },
   "homepage": "https://github.com/syanenko/xrview#readme",
-  "dependencies": {},
+  "dependencies": {
+    "node-forge": ">=1.3.2"
+  },
   "devDependencies": {
-    "servez": "^2.1.3"
+    "servez": "^2.1.3",
+    "node-forge": ">=1.3.2"
   }
 }
