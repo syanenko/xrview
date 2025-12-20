@@ -1,5 +1,5 @@
 # <em>XR-View</em>
- View 3D models (Wavefront OBJ format) in XR environment.<br>
+ View 3D models (Wavefront OBJ format) in XR.<br>
  Live demo: <a href='https://xrview.yesbird.online'>xrview.yesbird.online</a> - upload your model by clicking ![outline_file_upload_white_24dp](https://github.com/user-attachments/assets/04a0cdee-d674-4088-b678-def3d42f20cb) icon.
  
 ### <em>Instalation</em><br>
